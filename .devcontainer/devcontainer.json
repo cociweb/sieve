@@ -7,7 +7,9 @@
     "ghcr.io/devcontainers/features/python:1": {
       "version": "3.12"
     },
-    "ghcr.io/devcontainers/features/docker-in-docker:2": {}
+    "ghcr.io/devcontainers/features/docker-in-docker:2": {
+      "moby": false
+    }
   },
   "forwardPorts": [8080, 8443, 8765, 4190],
   "postCreateCommand": "npm ci || npm install --no-bin-links",
