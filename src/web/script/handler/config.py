@@ -30,7 +30,9 @@ class ConfigHandler:
           'username' : account.get_auth_username(request),
           'authenticate' : account.can_authenticate(),
           'authorize' : account.can_authorize(),
-          'endpoint' : f"websocket/{account.get_id()}"
+          'endpoint' : f"websocket/{account.get_id()}",
+          'sieveHost' : account.get_sieve_host(),
+          'sievePort' : account.get_sieve_port()
         }
 
       except Exception as ex:

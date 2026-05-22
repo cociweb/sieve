@@ -1,5 +1,7 @@
 import logging
 
+from urllib.parse import parse_qs, unquote
+
 from ..websocket import WebSocket
 from ..sieve.sievesocket import SieveSocket
 from ..messagepump import MessagePump
@@ -20,13 +22,23 @@ class WebSocketHandler:
 
   def handle_request(self, context, request) -> None:
 
-    logging.info(f"Websocket Request for {request.path}")
+    logging.info(f"Websocket Request for {request.url}")
 
-    account = self.__config.get_account_by_id(
-      request.path[len("/websocket/"):])
+    account_id = request.path[len("/websocket/"):].split("?", 1)[0]
+
+    account = self.__config.get_account_by_id(account_id)
 
     host = account.get_sieve_host()
     port = int(account.get_sieve_port())
+
+    if request.query:
+      params = parse_qs(request.query)
+      if params.get("sieveHost") and params["sieveHost"][0]:
+        host = unquote(params["sieveHost"][0])
+      if params.get("sievePort") and params["sievePort"][0]:
+        port = int(params["sievePort"][0])
+
+    logging.info(f"ManageSieve backend {host}:{port} for account {account.get_name()}")
 
     # Websocket is read
     with WebSocket(request, context) as websocket:

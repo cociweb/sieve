@@ -61,12 +61,64 @@ import { SieveI18n } from "./libs/managesieve.ui/utils/SieveI18n.mjs";
         displayName: await host.getDisplayName(),
         hostname: await host.getHostname(),
         port: await host.getPort(),
+        fingerprint: await host.getFingerprint(),
 
         security: await security.getTLS(),
         mechanism: await security.getMechanism(),
 
-        username: await authentication.getUsername()
+        username: await authentication.getUsername(),
+        canAuthenticate: account.getServerConfig().authenticate
       };
+    },
+
+    "account-get-server": async function (msg) {
+
+      logger.logAction(`Get server for ${msg.payload.account}`);
+
+      const host = await accounts.getAccountById(msg.payload.account).getHost();
+
+      return {
+        displayName: await host.getDisplayName(),
+        hostname: await host.getHostname(),
+        port: await host.getPort(),
+        fingerprint: await host.getFingerprint(),
+        keepAlive: await host.getKeepAlive()
+      };
+    },
+
+    "account-set-server": async function (msg) {
+
+      logger.logAction(`Set server for ${msg.payload.account}`);
+
+      const host = await accounts.getAccountById(msg.payload.account).getHost();
+
+      await host.setDisplayName(msg.payload.displayName);
+      await host.setHostname(msg.payload.hostname);
+      await host.setPort(msg.payload.port);
+      await host.setFingerprint(msg.payload.fingerprint);
+      await host.setKeepAlive(msg.payload.keepAlive);
+    },
+
+    "account-setting-get-credentials": async function (msg) {
+
+      logger.logAction(`Get credentials for ${msg.payload.account}`);
+
+      const account = accounts.getAccountById(msg.payload.account);
+
+      return {
+        authentication: {
+          username: await (await account.getAuthentication()).getUsername()
+        }
+      };
+    },
+
+    "account-settings-set-credentials": async function (msg) {
+
+      logger.logAction(`Set credentials for ${msg.payload.account}`);
+
+      const account = accounts.getAccountById(msg.payload.account);
+      await (await account.getAuthentication()).setUsername(
+        msg.payload.authentication.username);
     },
 
     "settings-get-loglevel": async function() {

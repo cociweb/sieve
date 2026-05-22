@@ -13,8 +13,10 @@ import { SieveAbstractAuthentication } from "./SieveAbstractAuthentication.mjs";
 
 import { SieveIpcClient } from "./../../utils/SieveIpcClient.mjs";
 
+const CONFIG_USERNAME = "auth.username";
+
 /**
- * Uses the IMAP accounts credentials.
+ * Client-side authentication for the web proxy.
  */
 class SieveWebSocketAuthentication extends SieveAbstractAuthentication {
 
@@ -46,7 +48,20 @@ class SieveWebSocketAuthentication extends SieveAbstractAuthentication {
    * @inheritdoc
    */
   async getUsername() {
+    const stored = await this.account.getConfig().getString(CONFIG_USERNAME, null);
+    if (stored !== null && stored !== "")
+      return stored;
+
     return this.account.getServerConfig().username;
+  }
+
+  /**
+   * @param {string} username
+   * @returns {SieveWebSocketAuthentication}
+   */
+  async setUsername(username) {
+    await this.account.getConfig().setString(CONFIG_USERNAME, username);
+    return this;
   }
 }
 

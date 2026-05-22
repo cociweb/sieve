@@ -26,7 +26,10 @@ class HttpRequest:
 
   @property
   def query(self) -> str:
-    return self.__request[1].split("?", 1)[1]
+    parts = self.__request[1].split("?", 1)
+    if len(parts) < 2:
+      return ""
+    return parts[1]
 
   @property
   def method(self) -> str:

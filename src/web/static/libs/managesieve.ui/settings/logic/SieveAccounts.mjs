@@ -27,7 +27,9 @@ class SieveAccounts extends SieveAbstractAccounts {
     const accounts = {};
 
     for (const key of Object.keys(items)) {
-      accounts[key] = new SieveAccount(key, items[key]);
+      const account = new SieveAccount(key, items[key]);
+      await account.getHost().ensureDefaults();
+      accounts[key] = account;
     }
 
     this.accounts = accounts;
