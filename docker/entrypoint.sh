@@ -1,19 +1,48 @@
 #!/bin/sh
 set -e
 
-CERT_DIR="/etc/apache2/certs"
 CONFIG_FILE="/etc/sieve/config.ini"
-CONFIG_TEMPLATE="/etc/sieve/config.template.ini"
+APACHE_TEMPLATE="/etc/apache2/sites-available/sieve.conf.template"
+APACHE_SITE="/etc/apache2/sites-available/sieve.conf"
 
-mkdir -p "$CERT_DIR" /etc/sieve
+DEFAULT_CERT_FILE="/etc/apache2/certs/tls.crt"
+DEFAULT_KEY_FILE="/etc/apache2/certs/tls.key"
 
-if [ ! -f "$CERT_DIR/tls.crt" ] || [ ! -f "$CERT_DIR/tls.key" ]; then
-  echo "Generating self-signed TLS certificate..."
-  openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
-    -keyout "$CERT_DIR/tls.key" \
-    -out "$CERT_DIR/tls.crt" \
-    -subj "/CN=sieve.local/O=Sieve/C=US"
+SSL_CERTIFICATE_FILE="${SSL_CERTIFICATE_FILE:-$DEFAULT_CERT_FILE}"
+SSL_CERTIFICATE_KEY_FILE="${SSL_CERTIFICATE_KEY_FILE:-$DEFAULT_KEY_FILE}"
+
+mkdir -p /etc/ssl/certs /etc/ssl/private /etc/apache2/certs \
+  "$(dirname "$SSL_CERTIFICATE_FILE")" "$(dirname "$SSL_CERTIFICATE_KEY_FILE")" \
+  /etc/sieve
+
+using_defaults=false
+if [ "$SSL_CERTIFICATE_FILE" = "$DEFAULT_CERT_FILE" ] \
+  && [ "$SSL_CERTIFICATE_KEY_FILE" = "$DEFAULT_KEY_FILE" ]; then
+  using_defaults=true
 fi
+
+if [ ! -f "$SSL_CERTIFICATE_FILE" ] || [ ! -f "$SSL_CERTIFICATE_KEY_FILE" ]; then
+  if [ "$using_defaults" = true ]; then
+    echo "Generating self-signed TLS certificate at $SSL_CERTIFICATE_FILE and $SSL_CERTIFICATE_KEY_FILE ..."
+    openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
+      -keyout "$SSL_CERTIFICATE_KEY_FILE" \
+      -out "$SSL_CERTIFICATE_FILE" \
+      -subj "/CN=sieve.local/O=Sieve/C=US"
+  else
+    echo "ERROR: TLS certificate file(s) not found." >&2
+    echo "  SSL_CERTIFICATE_FILE=$SSL_CERTIFICATE_FILE ($([ -f "$SSL_CERTIFICATE_FILE" ] && echo exists || echo missing))" >&2
+    echo "  SSL_CERTIFICATE_KEY_FILE=$SSL_CERTIFICATE_KEY_FILE ($([ -f "$SSL_CERTIFICATE_KEY_FILE" ] && echo exists || echo missing))" >&2
+    exit 1
+  fi
+fi
+
+echo "Using TLS certificate: $SSL_CERTIFICATE_FILE"
+echo "Using TLS private key: $SSL_CERTIFICATE_KEY_FILE"
+
+sed \
+  -e "s|__SSL_CERTIFICATE_FILE__|${SSL_CERTIFICATE_FILE}|g" \
+  -e "s|__SSL_CERTIFICATE_KEY_FILE__|${SSL_CERTIFICATE_KEY_FILE}|g" \
+  "$APACHE_TEMPLATE" > "$APACHE_SITE"
 
 SIEVE_HOST="${DOVECOT_HOST:-dovecot}"
 SIEVE_PORT="${DOVECOT_PORT:-4190}"

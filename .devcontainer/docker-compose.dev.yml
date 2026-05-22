@@ -14,6 +14,8 @@ services:
       DOVECOT_HOST: dovecot
       DOVECOT_PORT: "4190"
       AUTH_USER: user
+      SSL_CERTIFICATE_FILE: ${SSL_CERTIFICATE_FILE:-/etc/ssl/certs/fullchain.pem}
+      SSL_CERTIFICATE_KEY_FILE: ${SSL_CERTIFICATE_KEY_FILE:-/etc/ssl/certs/privkey.pem}
     ports:
       - "8080:80"
       - "8443:443"

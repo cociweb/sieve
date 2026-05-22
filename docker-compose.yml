@@ -1,18 +1,19 @@
 services:
   websieve:
-    build: .
     image: ghcr.io/thsmi/sieve:latest
     container_name: websieve
     ports:
       - "8443:443"
       - "8080:80"
-    volumes:
-      - sieve-certs:/etc/apache2/certs
     environment:
       SIEVE_LOG_LEVEL: info
       DOVECOT_HOST: ${DOVECOT_HOST:-dovecot}
       DOVECOT_PORT: ${DOVECOT_PORT:-4190}
       AUTH_USER: ${AUTH_USER:-user}
+      SSL_CERTIFICATE_FILE: ${SSL_CERTIFICATE_FILE:-/etc/apache2/certs/tls.crt}
+      SSL_CERTIFICATE_KEY_FILE: ${SSL_CERTIFICATE_KEY_FILE:-/etc/apache2/certs/tls.key}
+    volumes:
+      - sieve-certs:/etc/apache2/certs
     restart: unless-stopped
 
   dovecot:
@@ -23,6 +24,5 @@ services:
     ports:
       - "4190:4190"
       - "993:993"
-
 volumes:
   sieve-certs:

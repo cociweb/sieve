@@ -3,8 +3,8 @@
   DocumentRoot /var/www/sieve
 
   SSLEngine on
-  SSLCertificateFile /etc/apache2/certs/tls.crt
-  SSLCertificateKeyFile /etc/apache2/certs/tls.key
+  SSLCertificateFile __SSL_CERTIFICATE_FILE__
+  SSLCertificateKeyFile __SSL_CERTIFICATE_KEY_FILE__
 
   Header always set Strict-Transport-Security "max-age=63072000; includeSubDomains"
   Header always set X-Content-Type-Options "nosniff"
