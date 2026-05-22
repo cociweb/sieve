@@ -295,8 +295,8 @@ class SieveSimpleResponse {
         return new SieveResponseCodeSasl(this.responseCode);
     }
 
-    // TODO Implement all of the Response codes:
-    // "ACTIVE" / "NONEXISTENT" / "ALREADYEXISTS" / "WARNINGS" /AUTH-TOO-WEAK /TRANSITION-NEEDED /TRYLATER/ ENCRYPT-NEEDED / QUOTA / TAG
+    // Unimplemented response codes: ACTIVE, NONEXISTENT, ALREADYEXISTS, WARNINGS,
+    // AUTH-TOO-WEAK, TRANSITION-NEEDED, TRYLATER, ENCRYPT-NEEDED, QUOTA, TAG
     return new SieveResponseCode(this.responseCode);
   }
 }

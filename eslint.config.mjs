@@ -18,6 +18,7 @@ import jsdoc from 'eslint-plugin-jsdoc';
 import globals from "globals";
 
 const DEFAULT_INDENT = 2;
+const SWITCH_CASE_INDENT = 1;
 
 /**
  * ESLint 9 includes by default all javascript files it can find.
@@ -109,7 +110,7 @@ export default [
       "indent": [
         "error", DEFAULT_INDENT,
         {
-          "SwitchCase": 1
+          "SwitchCase": SWITCH_CASE_INDENT
         }
       ],
       "yoda": "error",

@@ -600,7 +600,6 @@ class SieveAbstractSession {
 
     this.getSieve().setIdleWait(this.getOption("keepAlive"));
 
-    // TODO do we really need this? Or do we need this only for keep alive?
     this.getSieve().addListener(this);
 
     // A referral during connection means we need to connect to the new

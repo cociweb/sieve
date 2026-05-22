@@ -32,6 +32,7 @@ const DEFAULT_TIMEOUT = 20000;
 const NO_IDLE = 0;
 
 const NOT_STARTED = -1;
+const NEXT_QUEUE_INDEX = 1;
 
 const TLS_SECURITY_NONE = 0;
 const TLS_SECURITY_EXPLICIT = 1;
@@ -142,7 +143,7 @@ class LockedMessageQueue {
     if (this.offset === NOT_STARTED)
       return;
 
-    this.items.splice(0, this.offset + 1);
+    this.items.splice(0, this.offset + NEXT_QUEUE_INDEX);
     this.reset();
   }
 
@@ -173,7 +174,7 @@ class LockedMessageQueue {
    *   true in case there are more elements. False in case end was reached.
    */
   hasNext() {
-    return (this.offset + 1 < this.items.length);
+    return (this.offset + NEXT_QUEUE_INDEX < this.items.length);
   }
 
   /**

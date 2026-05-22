@@ -105,7 +105,6 @@ class SieveAbstractRequest {
    */
   addTimeoutListener(listener) {
 
-    // TODO should be renamed to error listener as it is more than just a timeout handler...
     if (typeof listener !== 'function') {
       throw new Error("Timeout listener is not a function");
     }

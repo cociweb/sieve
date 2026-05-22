@@ -14,8 +14,10 @@ import { SieveLexer } from "./../../../toolkit/SieveLexer.mjs";
 import { SieveAbstractBlock } from "./../../../toolkit/logic/AbstractElements.mjs";
 
 /**
+ * Represents the body of a Sieve block containing actions and conditions.
  *
- * @param {*} docshell
+ * @param {SieveDocument} docshell
+ *  the document which owns this element
  * @param {string} id
  *   the blocks unique id.
  */
@@ -63,8 +65,10 @@ SieveBlockBody.prototype.toScript
 
 
 /**
+ * Represents a braced Sieve block.
  *
- * @param {*} docshell
+ * @param {SieveDocument} docshell
+ *  the document which owns this element
  * @param {string} id
  *   the blocks unique id.
  */
@@ -110,13 +114,15 @@ const ROOT_ELEMENT_BODY = 1;
 const UNKNOWN_ID = -1;
 
 /**
- *
+ * Root node of a Sieve script document.
  */
 class SieveRootNode extends SieveBlockBody {
 
   /**
+   * Creates the root node for a Sieve script.
    *
-   * @param {*} docshell
+   * @param {SieveDocument} docshell
+   *  the document which owns this element
    */
   constructor(docshell) {
 
@@ -180,8 +186,6 @@ class SieveRootNode extends SieveBlockBody {
     // Step 2: Add require...
     for (const item of capabilities.dependencies)
       this.elms[ROOT_ELEMENT_IMPORT].capability(item);
-
-    // TODO Remove unused requires...
 
     return super.toScript();
   }
