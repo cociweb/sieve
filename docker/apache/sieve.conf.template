@@ -1,5 +1,5 @@
 <VirtualHost *:443>
-  ServerName sieve.local
+  ServerName __SERVER_NAME__
   DocumentRoot /var/www/sieve
 
   SSLEngine on

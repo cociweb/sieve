@@ -20,7 +20,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 COPY --from=build /src/build/web/static /var/www/sieve
 COPY src/web/script /opt/sieve/script
 COPY src/web/main.py /opt/sieve/main.py
-COPY docker/apache/000-default.conf /etc/apache2/sites-available/000-default.conf
+COPY docker/apache/000-default.conf.template /etc/apache2/sites-available/000-default.conf.template
 COPY docker/apache/sieve.conf.template /etc/apache2/sites-available/sieve.conf.template
 COPY docker/config/config.template.ini /etc/sieve/config.template.ini
 COPY docker/entrypoint.sh /entrypoint.sh

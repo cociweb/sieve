@@ -76,6 +76,7 @@ Environment variables:
 | `SIEVE_LOG_LEVEL` | `info` | Proxy log level (`debug`, `info`, `warning`) |
 | `SSL_CERTIFICATE_FILE` | `/etc/apache2/certs/tls.crt` | Path to the TLS certificate (`.crt` or `.pem`) |
 | `SSL_CERTIFICATE_KEY_FILE` | `/etc/apache2/certs/tls.key` | Path to the TLS private key (`.key` or `.pem`) |
+| `SERVER_NAME` | *(from certificate or `sieve.local`)* | Apache `ServerName`; must match the certificate hostname |
 
 ### Apache TLS and authentication
 
@@ -106,6 +107,10 @@ volumes:
 
 If both variables keep the defaults and the files are missing, a self-signed
 certificate is generated automatically (development only).
+
+When you mount a real certificate, set `SERVER_NAME` to the hostname on the
+certificate (for example `mail.example.com`). If omitted, the first DNS name or
+common name from the certificate is used automatically.
 
 Apache site configuration is rendered at startup from
 [docker/apache/sieve.conf.template](docker/apache/sieve.conf.template).

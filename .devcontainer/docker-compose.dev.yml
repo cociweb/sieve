@@ -16,6 +16,7 @@ services:
       AUTH_USER: user
       SSL_CERTIFICATE_FILE: ${SSL_CERTIFICATE_FILE:-/etc/ssl/certs/fullchain.pem}
       SSL_CERTIFICATE_KEY_FILE: ${SSL_CERTIFICATE_KEY_FILE:-/etc/ssl/certs/privkey.pem}
+      SERVER_NAME: ${SERVER_NAME:-sieve.local}
     ports:
       - "8080:80"
       - "8443:443"

@@ -1,4 +1,4 @@
 <VirtualHost *:80>
-  ServerName sieve.local
+  ServerName __SERVER_NAME__
   Redirect permanent / https://%{SERVER_NAME}/
 </VirtualHost>

@@ -4,9 +4,48 @@ set -e
 CONFIG_FILE="/etc/sieve/config.ini"
 APACHE_TEMPLATE="/etc/apache2/sites-available/sieve.conf.template"
 APACHE_SITE="/etc/apache2/sites-available/sieve.conf"
+APACHE_HTTP_TEMPLATE="/etc/apache2/sites-available/000-default.conf.template"
+APACHE_HTTP_SITE="/etc/apache2/sites-available/000-default.conf"
 
 DEFAULT_CERT_FILE="/etc/apache2/certs/tls.crt"
 DEFAULT_KEY_FILE="/etc/apache2/certs/tls.key"
+DEFAULT_SERVER_NAME="sieve.local"
+
+detect_cert_server_name() {
+  cert="$1"
+  san=""
+  cn=""
+
+  if [ ! -f "$cert" ]; then
+    return 0
+  fi
+
+  san=$(openssl x509 -in "$cert" -noout -ext subjectAltName 2>/dev/null \
+    | tr ',' '\n' \
+    | sed -n 's/^[[:space:]]*DNS:\([^[:space:]]*\).*/\1/p' \
+    | head -1)
+
+  if [ -n "$san" ]; then
+    printf '%s' "$san"
+    return 0
+  fi
+
+  cn=$(openssl x509 -in "$cert" -noout -subject 2>/dev/null \
+    | sed -n 's/.*CN[[:space:]]*=[[:space:]]*\([^,/]*\).*/\1/p')
+
+  printf '%s' "$cn"
+}
+
+render_apache_site() {
+  template="$1"
+  output="$2"
+
+  sed \
+    -e "s|__SSL_CERTIFICATE_FILE__|${SSL_CERTIFICATE_FILE}|g" \
+    -e "s|__SSL_CERTIFICATE_KEY_FILE__|${SSL_CERTIFICATE_KEY_FILE}|g" \
+    -e "s|__SERVER_NAME__|${SERVER_NAME}|g" \
+    "$template" > "$output"
+}
 
 SSL_CERTIFICATE_FILE="${SSL_CERTIFICATE_FILE:-$DEFAULT_CERT_FILE}"
 SSL_CERTIFICATE_KEY_FILE="${SSL_CERTIFICATE_KEY_FILE:-$DEFAULT_KEY_FILE}"
@@ -39,10 +78,17 @@ fi
 echo "Using TLS certificate: $SSL_CERTIFICATE_FILE"
 echo "Using TLS private key: $SSL_CERTIFICATE_KEY_FILE"
 
-sed \
-  -e "s|__SSL_CERTIFICATE_FILE__|${SSL_CERTIFICATE_FILE}|g" \
-  -e "s|__SSL_CERTIFICATE_KEY_FILE__|${SSL_CERTIFICATE_KEY_FILE}|g" \
-  "$APACHE_TEMPLATE" > "$APACHE_SITE"
+SERVER_NAME="${SERVER_NAME:-DEFAULT_SERVER_NAME}"
+if [ -z "$SERVER_NAME" ] && [ "$using_defaults" = false ]; then
+  SERVER_NAME=$(detect_cert_server_name "$SSL_CERTIFICATE_FILE")
+fi
+SERVER_NAME="${SERVER_NAME:-$DEFAULT_SERVER_NAME}"
+echo "Using ServerName: $SERVER_NAME"
+
+render_apache_site "$APACHE_TEMPLATE" "$APACHE_SITE"
+render_apache_site "$APACHE_HTTP_TEMPLATE" "$APACHE_HTTP_SITE"
+printf 'ServerName %s\n' "$SERVER_NAME" > /etc/apache2/conf-available/servername.conf
+a2enconf servername 2>/dev/null || true
 
 SIEVE_HOST="${DOVECOT_HOST:-dovecot}"
 SIEVE_PORT="${DOVECOT_PORT:-4190}"
