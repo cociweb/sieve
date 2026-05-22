@@ -100,6 +100,7 @@ esac
 
 SIEVE_HOST="${SIEVE_HOST%%/*}"
 SIEVE_HOST="${SIEVE_HOST%%:*}"
+SIEVE_HOST="$(printf '%s' "$SIEVE_HOST" | sed 's/^[[:space:]]*//;s/[[:space:]]*$//')"
 
 AUTH_USER="${AUTH_USER:-user}"
 VERBOSE="${SIEVE_LOG_LEVEL:-info}"

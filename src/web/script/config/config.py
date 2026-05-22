@@ -39,7 +39,7 @@ class SieveAccount:
     raise Exception("No authorization configured")
 
   def get_sieve_host(self):
-    return self._get_property("SieveHost")
+    return self._get_property("SieveHost").strip()
 
   def get_sieve_port(self):
     return self._get_property("SievePort")

@@ -38,9 +38,9 @@ class WebSocketHandler:
     if request.query:
       params = parse_qs(request.query)
       if params.get("sieveHost") and params["sieveHost"][0]:
-        host = unquote(params["sieveHost"][0])
+        host = unquote(params["sieveHost"][0]).strip()
       if params.get("sievePort") and params["sievePort"][0]:
-        port = int(params["sievePort"][0])
+        port = int(params["sievePort"][0].strip())
 
     auth_mode = "client" if account.can_authenticate() else "proxy"
     logging.info(
@@ -59,6 +59,11 @@ class WebSocketHandler:
       with SieveSocket(host, port) as sievesocket:
 
         sievesocket.start_tls()
+
+        if not sievesocket.has_sasl_support():
+          raise Exception(
+            "No SASL mechanisms available after STARTTLS; "
+            "cannot authenticate with this server")
 
         if not account.can_authenticate():
           logging.info(f"Proxy authentication for {account.get_name()}")

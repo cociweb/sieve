@@ -87,13 +87,15 @@ class Capabilities(Response):
       if key == b'"STARTTLS"':
         continue
 
-      # Clear the sasl mechanism in case we are already authenticated
-      # or return PLAIN in case we are not authenticated.
+      # Pass through server SASL mechanisms for client-side authentication.
       if key == b'"SASL"':
         if not self.__can_authenticate:
           result += b'"SASL" ""\r\n'
         else:
-          result += b'"SASL" "PLAIN"\r\n'
+          result += key
+          if len(value):
+            result += b" "+value
+          result += b"\r\n"
 
         continue
 

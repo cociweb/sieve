@@ -42,14 +42,23 @@ class SieveSocket:
 
     capabilities = Capabilities()
     capabilities.decode(self.recv())
-
-    if b'"SASL"' not in capabilities.get_capabilities():
-      raise Exception("Sasl Plain not supported")
-
-    if b'PLAIN' not in capabilities.get_capabilities()[b'"SASL"'][1:-1].split(b" "):
-      raise Exception("Sasl Plain not supported")
-
     self.__capabilities = capabilities
+
+    logging.debug(
+      f"ManageSieve capabilities (pre-TLS): {self.__capabilities.get_capabilities()}")
+
+  def _sasl_mechanisms(self):
+    sasl = self.__capabilities.get_capabilities().get(b'"SASL"', b'""')
+    if not sasl or sasl == b'""':
+      return []
+
+    return sasl[1:-1].split(b" ")
+
+  def _has_sasl_mechanism(self, mechanism: str) -> bool:
+    return mechanism.encode() in self._sasl_mechanisms()
+
+  def has_sasl_support(self) -> bool:
+    return len(self._sasl_mechanisms()) > 0
 
   def __del__(self) -> None:
     self.disconnect()
@@ -114,8 +123,14 @@ class SieveSocket:
     #update the capabilities
     self.__capabilities.decode(self.recv())
 
+    logging.info(
+      f"ManageSieve SASL mechanisms: {[m.decode() for m in self._sasl_mechanisms()]}")
+
 
   def authenticate(self, authentication: str, password: str, authorization:str ) -> None:
+
+    if not self._has_sasl_mechanism("PLAIN"):
+      raise Exception("SASL PLAIN not supported after STARTTLS")
 
     self.__capabilities.disable_authentication()
 

@@ -74,8 +74,9 @@ class SieveWebSocketHost extends SieveCustomHost {
    */
   async getHostname() {
     await this.ensureDefaults();
-    return await this.account.getConfig().getString(
+    const hostname = await this.account.getConfig().getString(
       CONFIG_HOSTNAME, this.account.getServerConfig().sieveHost || "");
+    return typeof hostname === "string" ? hostname.trim() : hostname;
   }
 
   /**
@@ -83,7 +84,8 @@ class SieveWebSocketHost extends SieveCustomHost {
    * @returns {SieveWebSocketHost}
    */
   async setHostname(hostname) {
-    await this.account.getConfig().setString(CONFIG_HOSTNAME, hostname);
+    await this.account.getConfig().setString(
+      CONFIG_HOSTNAME, typeof hostname === "string" ? hostname.trim() : hostname);
     return this;
   }
 

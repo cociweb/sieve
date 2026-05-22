@@ -81,7 +81,7 @@ class SieveServerSettingsUI {
    */
   getHostname() {
     return this.getDialog()
-      .querySelector(".sieve-settings-hostname").value;
+      .querySelector(".sieve-settings-hostname").value.trim();
   }
 
   /**

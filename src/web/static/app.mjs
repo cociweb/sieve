@@ -95,7 +95,7 @@ import { SieveI18n } from "./libs/managesieve.ui/utils/SieveI18n.mjs";
       const host = await accounts.getAccountById(msg.payload.account).getHost();
 
       await host.setDisplayName(msg.payload.displayName);
-      await host.setHostname(msg.payload.hostname);
+      await host.setHostname(msg.payload.hostname.trim());
       await host.setPort(msg.payload.port);
       await host.setFingerprint(msg.payload.fingerprint);
       await host.setKeepAlive(msg.payload.keepAlive);
