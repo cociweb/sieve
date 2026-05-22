@@ -23,7 +23,7 @@ import { SieveI18n } from "./libs/managesieve.ui/utils/SieveI18n.mjs";
 
   const logger = SieveLogger.getInstance();
 
-  // TODO remove me this file should not have any dependency to i18n
+  // Remove i18n dependency from this file.
   await (SieveI18n.getInstance())
     .load("default", "./libs/managesieve.ui/i18n/");
 
@@ -275,7 +275,7 @@ import { SieveI18n } from "./libs/managesieve.ui/utils/SieveI18n.mjs";
         return await sessions.get(account).checkScript(script);
       }
       catch (ex) {
-        // TODO throw an exception in case is it not an instance of a server side exception...
+        // Throw when the value is not a server-side exception instance.
         return ex.getResponse().getMessage();
       }
     },

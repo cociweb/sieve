@@ -13,12 +13,12 @@
 import { SieveAbstractElement } from "./AbstractElements.mjs";
 import { SieveLexer } from "./../SieveLexer.mjs";
 
-// TODO we need to do a cleanup, which means document caches elements by their id.
+// Document caches elements by id; a cleanup pass is planned.
 // These elements should be also tracked by the generic elements. especially with tags.
 // So it would be good to have a method which collects all ids of elements in use.
 // all other elements can then be dropped and removed.
 
-// TODO we need a list of items to emulate blocks...
+// A list of items is needed to emulate blocks.
 
 /**
  * An Abstract implementation for all Generic elements
@@ -452,7 +452,7 @@ class SieveGenericOptionalItem extends SieveAbstractGeneric {
   getElement(id) {
 
     if (!this.hasElement(id))
-      // TODO we should throw it is an error.
+      // Invalid state should throw an error.
       return null;
 
     return this._optionals.get(id).element;
@@ -523,8 +523,10 @@ class SieveGenericOptionalItem extends SieveAbstractGeneric {
   }
 
   /**
+   * Initializes optional tag definitions for this structure.
    *
    * @param {object} tags
+   *  the tag definitions to register
    * @returns {SieveGenericOptionalItem}
    *   a self reference
    */
@@ -750,7 +752,7 @@ class SieveGenericStructure extends SieveAbstractElement {
           element.parse(parser);
         }
         catch {
-          // TODO reset item
+          // Reset item after removal.
           // Reset the position as if nothing happened
           parser.pos(pos);
           pos = null;
@@ -883,7 +885,10 @@ class SieveGenericStructure extends SieveAbstractElement {
 
 
   /**
+   * Adds optional tag items to this generic structure.
+   *
    * @param {Array.<object>|object} tags
+   *  one or more optional tag definitions
    * @returns {SieveGenericStructure}
    *   a self reference
    */
@@ -1291,8 +1296,12 @@ class SieveImplicitGroupElement extends SieveGroupElement {
   }
 
   /**
+   * Sets the active group element from parsed data.
    *
-   * @param {*} data
+   * @param {SieveParser|string} data
+   *  the parsed value or parser state
+   * @returns {SieveImplicitGroupElement}
+   *  a self reference
    */
   setElement(data) {
     this.setCurrentElement(data);
@@ -1362,6 +1371,8 @@ class SieveExplicitGroupElement extends SieveImplicitGroupElement {
   }
 
   /**
+   * Returns the active group element or one of its children.
+   *
    * @param {string} [id]
    *   an optional id of the child element to get
    * @returns {SieveAbstractElement}

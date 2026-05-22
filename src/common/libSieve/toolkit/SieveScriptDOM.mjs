@@ -12,8 +12,6 @@
 
 import { SieveParser } from "./SieveParser.mjs";
 
-const NO_ELEMENT = -1;
-
 /**
  * Creates a new document for sieve scripts it is used to parse
  * store and manipulate sieve scripts
@@ -51,10 +49,14 @@ class SieveDocument {
   }
 
   /**
+   * Recursively walks the element tree and collects nodes matching a name.
    *
-   * @param {*} elms
-   * @param {*} name
-   * @param {*} result
+   * @param {SieveAbstractElement[]} elms
+   *  the elements to walk
+   * @param {string} name
+   *  the node name to match
+   * @param {SieveAbstractElement[]} result
+   *  the array to append matches to
    */
   _walk(elms, name, result) {
 
@@ -101,8 +103,12 @@ class SieveDocument {
   }
 
   /**
+   * Lays out the given element using the document widget engine.
    *
-   * @param {*} elm
+   * @param {SieveAbstractElement} elm
+   *  the element to lay out
+   * @returns {SieveAbstractWidget}
+   *  the widget for the element
    */
   layout(elm) {
     return this._widgets.widget(elm);
@@ -136,12 +142,16 @@ class SieveDocument {
   }
 
   /**
+   * Creates an element by matching registered class types.
    *
    * @param {string|string[]} types
-   *   an list with types.
+   *  an list with types.
    * @param {SieveParser|string} parser
-   *   a parser object or a string which holds the data that should be evaluated.
-   * @param {*} parent
+   *  a parser object or a string which holds the data that should be evaluated.
+   * @param {SieveAbstractElement} [parent]
+   *  the optional parent element.
+   * @returns {SieveAbstractElement}
+   *  the newly created element.
    */
   createByClass(types, parser, parent) {
     if (typeof (parser) === "string")
@@ -159,10 +169,14 @@ class SieveDocument {
   }
 
   /**
+   * Probes whether the parser starts with the named element type.
    *
    * @param {string} name
+   *  the element name to probe for
    * @param {string|SieveParser} parser
-   *   a parser object or a string which holds the data that should be evaluated.
+   *  a parser object or a string which holds the data that should be evaluated.
+   * @returns {boolean}
+   *  true when the parser matches the named type.
    */
   probeByName(name, parser) {
     if (typeof (parser) === "string")
@@ -190,25 +204,36 @@ class SieveDocument {
   }
 
   /**
+   * Checks whether the lexer supports the named element type.
    *
    * @param {string} name
+   *  the element name to check
+   * @returns {boolean}
+   *  true when the element type is supported.
    */
   supportsByName(name) {
     return this._lexer.supportsByName(name);
   }
 
   /**
+   * Checks whether the lexer supports the given class type.
    *
-   * @param {*} type
+   * @param {string|string[]} type
+   *  the class type or types to check
+   * @returns {boolean}
+   *  true when the class type is supported.
    */
   supportsByClass(type) {
     return this._lexer.supportsByClass(type);
   }
 
   /**
+   * Looks up a cached element by its unique id.
    *
    * @param {string} id
-   *   the unique id
+   *  the unique id
+   * @returns {SieveAbstractElement|undefined}
+   *  the cached element, if present.
    */
   id(id) {
     return this._nodes[id];
@@ -259,8 +284,12 @@ class SieveDocument {
   }
 
   /**
+   * Gets or sets server capability flags on the document lexer.
    *
-   * @param {*} capabilities
+   * @param {SieveCapabilities} [capabilities]
+   *  when provided, sets the active capabilities.
+   * @returns {SieveCapabilities}
+   *  the current capabilities.
    */
   capabilities(capabilities) {
     if (typeof (capabilities) === "undefined")

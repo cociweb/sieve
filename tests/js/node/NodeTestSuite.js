@@ -108,7 +108,7 @@
 
       scripts = scripts.map((script) => {
 
-        // FIXME : Should be read from a config ...
+        // Workspace path should be read from a config file.
         if (script.startsWith("${workspace}"))
           script = script.replace("${workspace}", testWorkspace);
 
@@ -147,10 +147,9 @@
      * @param {AbstractTestReport} report
      *   a reference to a report
      *
-     * @returns {string[]}
+     * @returns {Promise<string[]>}
      *   the test case names.
      */
-    // eslint-disable-next-line no-unused-vars
     async getTests(report) {
       return await this.execute(report, "GetTests");
     }
@@ -180,9 +179,14 @@
      * Runs a command inside the sandbox and waits for the result.
      * In case the command fails an exception is thrown.
      *
-     * @param {*} report
-     * @param {*} type
-     * @param {*} data
+     * @param {AbstractTestReport} report
+     *   a reference to the test report
+     * @param {string} type
+     *   the command type to execute
+     * @param {*} [data]
+     *   optional payload for the command
+     * @returns {Promise<*>}
+     *   the command result payload
      */
     async execute(report, type, data) {
 
@@ -264,9 +268,14 @@
   /**
    * Adapts the test fixture to a browser based runtime environment.
    */
+  /**
+   * Node.js test suite that runs browser tests in a child sandbox process.
+   */
   class NodeTestSuite extends AbstractTestSuite {
 
     /**
+     * Creates a Node.js test suite for the given workspace path.
+     *
      * @param {string} [workspace]
      *   path to the packaged test sources
      */

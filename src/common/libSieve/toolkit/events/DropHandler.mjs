@@ -12,6 +12,8 @@
 
 import { SieveDataTransfer } from "./DataTransfer.mjs";
 
+const TEST_CHILD_INDEX = 1;
+
 /**
  * Consumes drop events.
  */
@@ -58,9 +60,12 @@ class SieveDropHandler {
   }
 
   /**
+   * Binds this drop handler to an owner and optional sibling target.
    *
    * @param {SieveAbstractElement} owner
+   *  the element that receives drop events
    * @param {SieveAbstractElement} sibling
+   *  the sibling after which dropped items are inserted
    */
   bind(owner, sibling) {
     this._owner = owner;
@@ -376,8 +381,10 @@ class SieveBlockDropHandler extends SieveDropHandler {
   /**
    * Moves a the given test from the source to the target destination.
    *
-   * @param {*} source
-   * @param {*} target
+   * @param {SieveAbstractElement} source
+   *  the test element to move
+   * @param {SieveAbstractElement} target
+   *  the block that receives the test
    */
   moveTest(source, target) {
 
@@ -398,7 +405,7 @@ class SieveBlockDropHandler extends SieveDropHandler {
       oldOwner = conditional.remove(true, target);
 
       newCondition.append(conditional);
-      newCondition.children(1).test(source);
+      newCondition.children(TEST_CHILD_INDEX).test(source);
       newCondition.children(0).remove(true);
     }
     else
@@ -415,9 +422,12 @@ class SieveBlockDropHandler extends SieveDropHandler {
   }
 
   /**
+   * Moves an action element from source to the target block.
    *
    * @param {SieveAbstractElement} source
+   *  the action element to move
    * @param {SieveAbstractElement} target
+   *  the block that receives the action
    */
   moveAction(source, target) {
 
@@ -474,9 +484,12 @@ class SieveBlockDropHandler extends SieveDropHandler {
   }
 
   /**
+   * Creates a new sieve element at the drop target.
    *
-   * @param {*} sivFlavour
-   * @param {*} type
+   * @param {string} sivFlavour
+   *  the drag flavour of the new element
+   * @param {string} type
+   *  the sieve element type to create
    */
   createElement(sivFlavour, type) {
 
@@ -713,10 +726,12 @@ class SieveConditionDropHandler extends SieveDropHandler {
   }
 
   /**
+   * Creates a test or action element in a condition block.
    *
    * @param {string} sivFlavour
    *   the flavour of the new element.
-   * @param {*} type
+   * @param {string} type
+   *   the sieve element type to create
    */
   createElement(sivFlavour, type) {
     // The new home for our element
@@ -872,10 +887,12 @@ class SieveTestDropHandler extends SieveDropHandler {
   }
 
   /**
+   * Wraps an inner test with a new container element.
    *
    * @param {string} sivFlavour
    *   the flavour of the to be created element.
-   * @param {*} type
+   * @param {string} type
+   *   the sieve element type to create
    */
   createElement(sivFlavour, type) {
     // The new home for our element
@@ -1030,9 +1047,12 @@ class SieveMultaryDropHandler extends SieveDropHandler {
   }
 
   /**
+   * Appends a new test element to a multary operator.
    *
-   * @param {*} sivFlavour
-   * @param {*} type
+   * @param {string} sivFlavour
+   *  the drag flavour of the new element
+   * @param {string} type
+   *  the sieve test type to create
    */
   createElement(sivFlavour, type) {
     const item = this.parent().getSieve();

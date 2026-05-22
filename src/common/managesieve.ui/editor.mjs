@@ -57,13 +57,20 @@ async function main() {
     document.documentElement.setAttribute('data-bs-theme', 'light');
   }
 
-  await (SieveI18n.getInstance()).load();
+  const i18n = SieveI18n.getInstance();
+  await i18n.load();
 
+  let title;
   try {
-    document.title = SieveI18n.getInstance().getString("title.editor");
+    title = i18n.getString("title.editor");
   } catch {
-    document.title = "Edit Sieve Script";
+    title = "Edit Sieve Script";
   }
+  const pageTitle = title;
+  const setTitle = (value) => {
+    document.title = value;
+  };
+  setTitle(pageTitle);
 
   const url = new URL(window.location);
   const script = url.searchParams.get("script");
@@ -80,7 +87,7 @@ async function main() {
   SieveIpcClient.setRequestHandler("editor", "editor-shown", () => { window.focus(); editor.focus(); });
   SieveIpcClient.setRequestHandler("editor", "editor-hasChanged", async () => { return await editor.hasChanged(); });
 
-  // TODO Send a ready signal...
+  // Send a ready signal when initialization completes.
 }
 
 if (document.readyState !== 'loading')

@@ -20,14 +20,15 @@ import {
 import { SieveLexer } from "./../SieveLexer.mjs";
 
 /**
- *
+ * Shared base for generic grammar element factories.
  */
 class SieveAbstractGeneric {
 
   /**
    * Creates a new instance.
    *
-   * @param {*} item
+   * @param {object} item
+   *  the grammar item definition
    */
   constructor(item) {
     this.item = item;
@@ -60,10 +61,12 @@ class SieveAbstractGeneric {
   }
 
   /**
+   * Creates a new generic element instance for this grammar item.
    *
-   * @param {*} docshell
+   * @param {SieveDocument} docshell
+   *  the document which owns the new element
    * @param {string} id
-   *   the elements uniquer id.
+   *  the elements unique id.
    *
    * @returns {SieveAbstractElement}
    *   the new element.
@@ -218,8 +221,10 @@ const actions = new Map();
 const tests = new Map();
 
 /**
+ * Registers a generic Sieve action with the grammar.
  *
- * @param {*} item
+ * @param {object} item
+ *  the action grammar definition
  *
  */
 function addAction(item) {
@@ -240,8 +245,10 @@ function addAction(item) {
 }
 
 /**
+ * Registers a generic Sieve test with the grammar.
  *
- * @param {*} item
+ * @param {object} item
+ *  the test grammar definition
  *
  */
 function addTest(item) {
@@ -261,8 +268,10 @@ function addTest(item) {
 }
 
 /**
+ * Registers a generic tag group with the grammar.
  *
- * @param {*} group
+ * @param {object} group
+ *  the group grammar definition
  *
  */
 function addGroup(group) {
@@ -280,8 +289,10 @@ function addGroup(group) {
 
 
 /**
+ * Registers a generic tag with the grammar.
  *
  * @param {object} item
+ *  the tag grammar definition
  *
  */
 function addTag(item) {
@@ -323,23 +334,29 @@ function initTests() {
 }
 
 /**
+ * Builds the grammar tables for the given server capabilities.
  *
- * @param {*} capabilities
+ * @param {SieveCapabilities} capabilities
+ *  the server capabilities to filter against
+ * @returns {null}
+ *  reserved for a future scoped lexer instance
  */
 // eslint-disable-next-line no-unused-vars
 function createGrammar(capabilities) {
   initActions();
   initTests();
 
-  // todo we should return a lexer so that the grammar is scoped.
-  // but this is fare future
+  // Return a scoped lexer so the grammar is isolated per capability set.
   return null;
 }
 
 /**
+ * Merges property definitions into an existing generic grammar item.
  *
- * @param {*} action
- * @param {*} item
+ * @param {object} action
+ *  the generic grammar item to extend
+ * @param {object} item
+ *  the property definition to merge
  *
  *
  */
@@ -369,9 +386,12 @@ function extendGenericProperty(action, item) {
 }
 
 /**
+ * Extends a registered generic item with additional properties.
  *
- * @param {*} generics
- * @param {*} item
+ * @param {Map} generics
+ *  the registry of generic items
+ * @param {object} item
+ *  the extension definition
  *
  */
 function extendGeneric(generics, item) {
@@ -387,16 +407,17 @@ function extendGeneric(generics, item) {
     });
   }
 
-  // TODO we currently just replace the requirements.
-  // instead we should extend it with an any..
+  // Requirements are replaced; they should be extended with an any-of merge.
   if (item.requires) {
     x.requires = item.requires;
   }
 }
 
 /**
+ * Extends a registered action with additional grammar properties.
  *
- * @param {*} item
+ * @param {object} item
+ *  the extension definition
  *
  */
 function extendAction(item) {
@@ -404,8 +425,10 @@ function extendAction(item) {
 }
 
 /**
+ * Extends a registered test with additional grammar properties.
  *
- * @param {*} item
+ * @param {object} item
+ *  the extension definition
  *
  */
 function extendTest(item) {

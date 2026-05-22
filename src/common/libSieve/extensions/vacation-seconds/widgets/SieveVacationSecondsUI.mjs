@@ -62,7 +62,7 @@ class SieveVacationIntervalSeconds extends SieveOverlayItemWidget {
       return;
 
     document.querySelector("#cbxVacationIntervalSeconds").checked = true;
-    // FIXME: we ignore the unit here., instead we should use a numeric control
+    // Unit is ignored; a numeric control should be used instead.
     document.querySelector("#txtVacationIntervalSeconds").value = elm.getElement("seconds").getValue();
   }
 

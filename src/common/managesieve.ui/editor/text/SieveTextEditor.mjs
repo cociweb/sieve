@@ -16,6 +16,7 @@ import { SieveAbstractEditorUI } from "./../SieveAbstractEditor.mjs";
 
 const COMPILE_DELAY = 500;
 const EDITOR_SCROLL_INTO_VIEW_OFFSET = 200;
+const LAST_LINE_OFFSET = 1;
 
 /**
  * An text editor ui for sieve scripts.
@@ -421,7 +422,7 @@ class SieveTextEditorUI extends SieveAbstractEditorUI {
       // warp search at top or bottom
       cursor = this.cm.getSearchCursor(
         token,
-        isReverse ? { line: this.cm.lineCount() - 1 } : { line: 0, ch: 0 },
+        isReverse ? { line: this.cm.lineCount() - LAST_LINE_OFFSET } : { line: 0, ch: 0 },
         !isCaseSensitive);
 
       if (!cursor.find(isReverse))

@@ -28,6 +28,9 @@ const TEST_URL = "test/";
 const TEST_PATH = "./build/test";
 
 const HTTP_SUCCESS = 200;
+
+const DIRECTORY_FIRST = -1;
+const FILE_AFTER_DIRECTORY = 1;
 const HTTP_FILE_NOT_FOUND = 404;
 const HTTP_INTERNAL_ERROR = 500;
 
@@ -88,19 +91,23 @@ function sortDirectory(a, b) {
     return a.name.localeCompare(b.name);
 
   if (a.isDirectory())
-    return -1;
+    return DIRECTORY_FIRST;
 
   if (b.isDirectory())
-    return 1;
+    return FILE_AFTER_DIRECTORY;
 
   return a.name.localeCompare(b.name);
 }
 
 /**
+ * Renders an HTML directory listing for the given path.
  *
- * @param {*} filePath
- * @param {*} url
- * @param {*} response
+ * @param {string} filePath
+ *  the filesystem path to list
+ * @param {URL} url
+ *  the request URL used to build links
+ * @param {http.ServerResponse} response
+ *  the HTTP response to write to
  */
 async function doDirectoryListing(filePath, url, response) {
   const items = await (util.promisify(fs.readdir))(filePath, { withFileTypes: true });
@@ -130,8 +137,10 @@ async function doDirectoryListing(filePath, url, response) {
 }
 
 /**
+ * Sends the default index-not-found page.
  *
- * @param {*} response
+ * @param {http.ServerResponse} response
+ *  the HTTP response to write to
  */
 function doIndex(response) {
 

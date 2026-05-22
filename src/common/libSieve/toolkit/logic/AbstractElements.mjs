@@ -10,8 +10,12 @@
  *
  */
 
-// TODO: Should be renamed to SieveAbstractWidget
+const LAST_INDEX_OFFSET = 1;
+const SPLICE_ONE = 1;
+
+// Should be renamed to SieveAbstractWidget.
 /**
+ * Base class for all Sieve document elements.
  *
  * @param {SieveDocument} docshell
  *  the document which owns this element
@@ -154,7 +158,7 @@ SieveAbstractElement.prototype.require
   = function (imports) {
   };
 
-// TODO only temporary, should be merged into remove...
+// Temporary stub; should be merged into remove.
 /* SieveAbstractElement.prototype.removeChild
     = function ()
 {
@@ -198,9 +202,12 @@ SieveAbstractElement.prototype.remove
 //* ***************************************************************************//
 
 /**
+ * Base class for block elements that contain child nodes.
  *
- * @param {*} docshell
- * @param {*} id
+ * @param {SieveDocument} docshell
+ *  the document which owns this element
+ * @param {string} id
+ *  the elements unique id.
  */
 function SieveAbstractBlock(docshell, id) {
   SieveAbstractElement.call(this, docshell, id);
@@ -218,7 +225,7 @@ SieveAbstractBlock.prototype.children
       return this.elms;
 
     if ((typeof (idx) === "string") && (idx.toLowerCase() === ":last"))
-      idx = this.elms.length - 1;
+      idx = this.elms.length - LAST_INDEX_OFFSET;
 
     return this.elms[idx];
   };
@@ -254,16 +261,21 @@ SieveAbstractBlock.prototype.append
     return this;
   };
 
-// TODO Merge with "remove" when its working as it should
+// Should be merged with remove when cascade behavior is complete.
 /**
- * Removes the node including all child elements.
+ * Removes a child node including all of its descendants.
  *
- * To remove just a child node pass it's id as an argument
+ * To remove just a child node pass its id as an argument.
  *
  * @param {int} [childId]
  *  the child id which should be removed.
+ * @param {boolean} [cascade]
+ *  when true, empty parents are removed as well.
+ * @param {SieveAbstractElement} [stop]
+ *  element which stops the cascade removal.
  *
- * @returns {}
+ * @returns {SieveAbstractElement|null}
+ *  the removed child element, or this block when cascading.
  */
 SieveAbstractBlock.prototype.removeChild
   = function (childId, cascade, stop) {
@@ -282,7 +294,7 @@ SieveAbstractBlock.prototype.removeChild
 
       elm = this.elms[i];
       elm.parent(null);
-      this.elms.splice(i, 1);
+      this.elms.splice(i, SPLICE_ONE);
 
       break;
     }

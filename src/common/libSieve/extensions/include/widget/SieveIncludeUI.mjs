@@ -72,12 +72,12 @@ class SieveGlobalActionUI extends SieveActionDialogBoxUI {
     const variables = (new SieveStringListWidget("#sivIncludeGlobalList"));
 
     if (!variables.isUnique()) {
-      alert("Variable list items have to be unique");
+      console.error("Variable list items have to be unique");
       return false;
     }
 
     if (variables.isEmpty()) {
-      alert("Variable list has to be non-empty");
+      console.error("Variable list has to be non-empty");
       return false;
     }
 

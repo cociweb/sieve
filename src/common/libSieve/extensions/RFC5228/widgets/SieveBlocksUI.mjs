@@ -45,7 +45,7 @@ class SieveRootNodeUI extends SieveAbstractBoxUI {
  */
 class SieveBlockUI extends SieveAbstractBoxUI {
 
-  // TODO is this really needed to wrap the item?
+  // Item wrapper may be redundant; kept for drag-and-drop compatibility.
   /**
    * Wraps the given child item in to a block.
    * @private

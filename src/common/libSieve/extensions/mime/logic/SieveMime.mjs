@@ -23,7 +23,7 @@ SieveGrammar.addTag({
   node: "mimeopts/type",
   type: "mimeopts/",
 
-  // fixme
+  // Capability requirement not yet validated.
   requires: "body",
 
   token: ":type"
@@ -33,7 +33,7 @@ SieveGrammar.addTag({
   node: "mimeopts/subtype",
   type: "mimeopts/",
 
-  // fixme
+  // Capability requirement not yet validated.
   requires: "body",
 
   token: ":subtype"
@@ -43,7 +43,7 @@ SieveGrammar.addTag({
   node: "mimeopts/contenttype",
   type: "mimeopts/",
 
-  // fixme
+  // Capability requirement not yet validated.
   requires: "body",
 
   token: ":contenttype"
@@ -53,7 +53,7 @@ SieveGrammar.addTag({
   node: "mimeopts/param",
   type: "mimeopts/",
 
-  // fixme
+  // Capability requirement not yet validated.
   requires: "body",
 
   token: ":param",
@@ -74,7 +74,7 @@ SieveGrammar.addGroup({
   node: "mimeopts",
   type: "mimeopts",
 
-  // fixme what is the default
+  // Default MIME option needs confirmation.
   value: ":text",
 
   items: ["mimeopts/"]

@@ -58,7 +58,7 @@ class SandboxedTestFixture extends AbstractSandboxedTestFixture {
         elm.type = "module";
 
         elm.addEventListener('error', function () {
-          // TODO return the error details.
+          // Return error details to the caller.
           reject(new Error("Failed to load script " + script));
         }, true);
 

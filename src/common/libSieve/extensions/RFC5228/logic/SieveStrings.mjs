@@ -23,7 +23,8 @@ const ONE_CHAR = 1;
 
 const MAX_QUOTE_LEN = 50;
 
-const IS_EVEN = 1;
+const IS_ODD = 1;
+const PAIR_SIZE = 2;
 
 /**
  * Implements as sieve multiline element.
@@ -209,7 +210,7 @@ class SieveQuotedString extends SieveAbstractElement {
       // An even number of backslashes means we we can ignore them. Thus the
       // quote terminates the string. An odd number means the quote is escaped
       // thus and protected.
-      if (count % 2 === IS_EVEN)
+      if (count % PAIR_SIZE === IS_ODD)
         break;
 
       // add the quote, it was escaped...
@@ -461,7 +462,7 @@ class SieveStringList extends SieveAbstractElement {
       if (this.elements[i][STRING_VALUE].value() !== str)
         continue;
 
-      this.elements.splice(i, 1);
+      this.elements.splice(i, ONE_CHAR);
     }
 
     return this;
@@ -496,7 +497,7 @@ class SieveStringList extends SieveAbstractElement {
     if (!this.elements.length)
       return '""';
 
-    if (this.compact && this.elements.length <= 1)
+    if (this.compact && this.elements.length <= ONE_CHAR)
       return this.elements[0][STRING_VALUE].toScript();
 
     let result = "[";

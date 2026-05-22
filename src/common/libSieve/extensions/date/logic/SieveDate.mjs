@@ -187,19 +187,19 @@ SieveGrammar.addTest({
 });
 
 
-// TODO: extend date by index tag (requires index)
+// Extend date by index tag (requires index extension).
 // Syntax:   date [":index" <fieldno: number> [":last"]]
 //                [<":zone" <time-zone: string>> / ":originalzone"]
 //                [COMPARATOR] [MATCH-TYPE] <header-name: string>
 //                <date-part: string> <key-list: string-list>
 
 
-// TODO: extend header by index tag (requires index)
+// Extend header by index tag (requires index extension).
 // Syntax:   header [":index" <fieldno: number> [":last"]]
 //                  [COMPARATOR] [MATCH-TYPE]
 //                  <header-names: string-list> <key-list: string-list>
 
-// TODO: extend address by index tag (requires index)
+// Extend address by index tag (requires index extension).
 // Syntax:   address [":index" <fieldno: number> [":last"]]
 //                   [ADDRESS-PART] [COMPARATOR] [MATCH-TYPE]
 //                   <header-list: string-list> <key-list: string-list>

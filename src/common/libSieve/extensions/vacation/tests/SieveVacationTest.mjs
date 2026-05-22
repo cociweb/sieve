@@ -188,7 +188,7 @@ suite.add("Manipulate Vacation Element - No values set - Set all values", () => 
 
   suite.assertEquals(false, elms[FIRST_ELEMENT].enable("mime"));
 
-  // TODO Test and change the addresses
+  // Test and change the addresses.
   elms[FIRST_ELEMENT].getElement("reason").value("some reason");
 
   elms[FIRST_ELEMENT].getElement("subject").getElement("subject").value("some subject");
@@ -250,7 +250,7 @@ suite.add("Manipulate Vacation Element - All values set - Change all values", ()
 
   suite.assertEquals(true, elms[FIRST_ELEMENT].enable("mime"));
 
-  // TODO Test and change the addresses
+  // Test and change the addresses.
   elms[FIRST_ELEMENT].getElement("reason").value("some other reason");
   elms[FIRST_ELEMENT].getElement("subject").getElement("subject").value("some other subject");
   elms[FIRST_ELEMENT].getElement("from").getElement("from").value("some other from");
@@ -310,7 +310,7 @@ suite.add("Manipulate Vacation Element - All values set - Remove all values", ()
   elms[FIRST_ELEMENT].enable("handle", false);
   elms[FIRST_ELEMENT].enable("mime", false);
 
-  // FIXME: An disable should not need resetting the element.
+  // A disable action should not need resetting the element.
   // The logic needs to be change....
   elms[FIRST_ELEMENT].getElement("interval").setElement();
   elms[FIRST_ELEMENT].enable("interval", false);

@@ -561,7 +561,7 @@ class SieveScriptBusyDialog extends SieveDialog {
   }
 }
 
-// TODO should be extracted an stored next to the editor
+// Dialog helpers should live next to the editor module.
 /**
  * Asks is a changed script should be saved
  */

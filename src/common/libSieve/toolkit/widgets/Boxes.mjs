@@ -25,6 +25,7 @@ import {
 const UNKNOWN_ID = -1;
 const RANDOM_SEED_SIZE = 10000000;
 const HEX_STRING = 16;
+const SINGLE_MATCH = 1;
 
 /**
  * An abstract base class to render sieve elements as html.
@@ -148,7 +149,7 @@ class SieveAbstractBoxUI {
 
     const item = document.querySelectorAll(`#sivElm${this.id()}`);
 
-    if ((!item.length) || (item.length > 1))
+    if ((!item.length) || (item.length > SINGLE_MATCH))
       throw new Error(`${item.length} Elements found for #sivElm${this.id()}`);
 
     item[0].parentElement.replaceChild(this.html(true), item[0]);
@@ -168,11 +169,14 @@ class SieveAbstractBoxUI {
 
 
   /**
-   * The drop element handler
-   * @param {} [handler]
-   * @param {} [sibling]
-   * @returns {SieveAbstractBoxUI}
-   *   a self reference
+   * Binds or returns the drop handler for this box.
+   *
+   * @param {SieveDropHandler} [handler]
+   *  the drop handler to bind
+   * @param {SieveAbstractElement} [sibling]
+   *  the sibling insertion target
+   * @returns {SieveAbstractBoxUI|SieveDropHandler}
+   *   a self reference or the bound handler
    */
   drop(handler, sibling) {
     if (typeof (handler) === "undefined")
@@ -189,10 +193,12 @@ class SieveAbstractBoxUI {
   }
 
   /**
+   * Binds or returns the drag handler for this box.
    *
-   * @param {*} [handler]
-   * @returns {SieveAbstractBoxUI}
-   *   a self reference
+   * @param {SieveAbstractDragHandler} [handler]
+   *  the drag handler to bind
+   * @returns {SieveAbstractBoxUI|SieveAbstractDragHandler}
+   *   a self reference or the bound handler
    */
   drag(handler) {
     if (typeof (handler) === "undefined")
@@ -418,7 +424,7 @@ class SieveDialogBoxUI extends SieveSourceBoxUI {
    */
   async showEditor() {
 
-    // TODO hide the save button in case we have only a help tab...
+    // Hide the save button when only a help tab is shown.
     (new bootstrap.Modal('#sivDialog2')).show();
 
     const save = () => { this.save(); };

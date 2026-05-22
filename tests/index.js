@@ -10,13 +10,17 @@ const path = require('path');
 
 const EXIT_CODE_ERROR = 1;
 const JUNIT_EXPORT_FILE = "./TEST-sieve.xml";
+const WORKSPACE_ARG_INDEX = 2;
 
 /**
- * The entry point
+ * The entry point.
+ *
+ * @returns {Promise<number>}
+ *  process exit code (0 on success, 1 when tests failed)
  */
 async function main() {
 
-  const workspace = process.argv[2] || path.join(__dirname, "../build/test/web");
+  const workspace = process.argv[WORKSPACE_ARG_INDEX] || path.join(__dirname, "../build/test/web");
   const suite = new NodeTestSuite(workspace);
   const report = new NodeTestReport("Test");
 
@@ -26,9 +30,11 @@ async function main() {
 
   report.summary();
 
-  if (report.hasFailed())
-    process.exitCode = EXIT_CODE_ERROR;
+  return report.hasFailed() ? EXIT_CODE_ERROR : 0;
 
 }
 
-main();
+main().then((exitCode) => {
+  if (exitCode)
+    process.exitCode = exitCode;
+});

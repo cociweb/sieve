@@ -101,7 +101,10 @@ class SieveAbstractDragHandler {
   }
 
   /**
+   * Returns the drag handler owner element.
+   *
    * @returns {SieveAbstractElement}
+   *  the element bound to this drag handler.
    */
   owner() {
     return this._owner;

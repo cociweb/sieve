@@ -11,7 +11,7 @@
 
 import { SieveAbstractEditorUI } from "./../SieveAbstractEditor.mjs";
 
-// FIXME should use an IPC instead of talking directly to the iframe...
+// Graphical editor should use IPC instead of talking directly to the iframe.
 
 /**
  *

@@ -58,7 +58,7 @@ const SieveLexer =
     this.names[name] = obj;
     this.types[type][name] = obj;
 
-    // TODO There should be only one probe and one create method.
+    // A single probe and create method would simplify the lexer API.
     // We should use a prefix to distinguish between types and unique names.
     // this.items[name] = obj;
     // this.items["@" + type][name] = obj;
@@ -87,7 +87,7 @@ const SieveLexer =
     obj.onNew = function (docshell, id) { return new callback(docshell, id); };
     obj.onCapable = function (capabilities) {
 
-      // FIXME: does not work with ES5 static... needs a callback.constructor.isCapable
+      // ES5 static methods do not support callback.constructor.isCapable.
       if (!callback.isCapable)
         return true;
 

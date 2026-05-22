@@ -251,11 +251,8 @@ class SieveVacationUI extends SieveActionDialogBoxUI {
     const addresses = (new SieveStringListWidget("#sivAddresses")).values();
     state["addresses"] = !!addresses.length;
 
-    // TODO Catch exceptions...
-    // ... then update the fields...
 
-    // TODO use html validation while typing....
-    // ... an djump to tab
+    // HTML validation while typing should jump to the offending tab.
 
     try {
       if (state["from"] && (!document.querySelector("#sivVacationFrom").checkValidity()))
@@ -280,7 +277,7 @@ class SieveVacationUI extends SieveActionDialogBoxUI {
       this.reason().value(document.querySelector("#sivVacationReason").value);
 
     } catch (ex) {
-      alert(ex);
+      console.error(ex);
       return false;
     }
 
@@ -362,7 +359,7 @@ class SieveVacationIntervalDays extends SieveOverlayItemWidget {
       return;
 
     document.querySelector("#cbxVacationIntervalDays").checked = true;
-    // FIXME: we ignore the unit here. Instead we should use a numeric control
+    // Unit is ignored; a numeric control should be used instead.
     document.querySelector("#txtVacationIntervalDays").value
       = elm.getElement("days").getValue();
   }

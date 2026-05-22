@@ -14,7 +14,7 @@ import { SieveParser } from "./../../../toolkit/SieveParser.mjs";
 import { SieveAbstractElement } from "./../../../toolkit/logic/AbstractElements.mjs";
 import { SieveLexer } from "./../../../toolkit/SieveLexer.mjs";
 
-// ToDo HashComment separated by line breaks are equivalent to bracket Comments...
+// Hash comments separated by line breaks are equivalent to bracket comments.
 
 /**
  *

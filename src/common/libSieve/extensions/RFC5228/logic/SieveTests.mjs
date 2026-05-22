@@ -18,6 +18,10 @@ const LEADING_WHITESPACE = 0;
 const TEST = 1;
 const TAILING_WHITESPACE = 2;
 
+const TEST_LIST_ENTRY_SINGLE = 1;
+const TEST_LIST_ENTRY_FULL = 3;
+const SPLICE_ONE = 1;
+
 SieveGrammar.addTest({
 
   node: "test/envelope",
@@ -222,13 +226,15 @@ SieveGrammar.addTest({
   }]
 });
 
-// TODO Stringlist and testslist are quite similar
+// String lists and test lists share similar structure.
 
 /**
+ * Represents a parenthesized list of Sieve tests.
  *
- * @param {*} docshell
+ * @param {SieveDocument} docshell
+ *  the document which owns this element
  * @param {string} id
- *   the test lists unique id.
+ *  the test lists unique id.
  */
 function SieveTestList(docshell, id) {
   SieveAbstractElement.call(this, docshell, id);
@@ -286,13 +292,13 @@ SieveTestList.prototype.append
     let element = [];
 
     switch ([].concat(elm).length) {
-      case 1:
+      case TEST_LIST_ENTRY_SINGLE:
         element[LEADING_WHITESPACE] = this._createByName("whitespace", "\r\n");
         element[TEST] = elm;
         element[TAILING_WHITESPACE] = this._createByName("whitespace");
         break;
 
-      case 3:
+      case TEST_LIST_ENTRY_FULL:
         element = elm;
         break;
 
@@ -349,7 +355,7 @@ SieveTestList.prototype.removeChild
       elm = this.tests[i][TEST];
       elm.parent(null);
 
-      this.tests.splice(i, 1);
+      this.tests.splice(i, SPLICE_ONE);
 
       break;
     }

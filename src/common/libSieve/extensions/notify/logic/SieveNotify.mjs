@@ -80,7 +80,7 @@ SieveGrammar.addTag({
   properties: [{
     id: "parameters",
 
-    // TODO should be either "1", "2" or "3"
+    // Value should be either "1", "2" or "3".
     elements: [{
       id: "importance",
       type: "string",

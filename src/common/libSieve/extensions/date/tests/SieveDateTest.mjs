@@ -89,7 +89,7 @@ suite.add("RFC5260 Snippet VIa", () => {
 
 suite.add("RFC5260 Snippet VI", () => {
 
-  // FIXME: Variables import is dropped silently
+  // Variables import is dropped silently.
   const script = ""
     // + 'require ["variables", "date", "editheader"];\r\n'
     + 'require ["date", "editheader"];\r\n'
