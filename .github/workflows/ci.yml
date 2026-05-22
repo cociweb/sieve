@@ -2,9 +2,9 @@ name: CI
 
 on:
   push:
-    branches: [master, main]
+    branches: [master, main, websieve]
   pull_request:
-    branches: [master, main]
+    branches: [master, main, websieve]
   workflow_dispatch:
 
 permissions:
