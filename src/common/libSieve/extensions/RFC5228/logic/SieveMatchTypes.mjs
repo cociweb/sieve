@@ -12,8 +12,8 @@
 
 import { SieveGrammar } from "./../../../toolkit/logic/GenericElements.mjs";
 
-// TODO match-type items (matchtype/) should not eat trailing whitespaces...
-// they this should be done my the match-type group
+// Match-type items (matchtype/) should not eat trailing whitespaces;
+// that should be handled by the match-type group.
 
 SieveGrammar.addTag({
   node: "match-type/is",

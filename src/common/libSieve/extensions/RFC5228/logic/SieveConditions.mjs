@@ -18,7 +18,7 @@ const AFTER_BLOCK = 1;
 const BEFORE_TEST = 2;
 
 /**
- *
+ * Represents an else branch in a Sieve conditional.
  */
 class SieveElse extends SieveBlock {
 
@@ -84,7 +84,7 @@ class SieveElse extends SieveBlock {
 
 
 /**
- *
+ * Represents an if branch in a Sieve conditional.
  */
 class SieveIf extends SieveBlock {
 
@@ -145,13 +145,17 @@ class SieveIf extends SieveBlock {
   }
 
   /**
+   * Removes a child test or block from this if branch.
    *
    * @param {string} childId
-   *   the child's unique id.
+   *  the child's unique id.
    * @param {boolean} cascade
+   *  set to true to remove empty parents
    * @param {SieveAbstractElement} stop
+   *  element which stops the cascade
    *
    * @returns {SieveAbstractElement}
+   *  the removed node
    */
   removeChild(childId, cascade, stop) {
 
@@ -236,7 +240,7 @@ class SieveIf extends SieveBlock {
 }
 
 /**
- *
+ * Represents a complete if/elsif/else conditional structure.
  */
 class SieveCondition extends SieveBlockBody {
 
@@ -292,11 +296,17 @@ class SieveCondition extends SieveBlockBody {
   }
 
   /**
+   * Removes a child branch from this conditional.
    *
    * @param {string} childId
-   *   the childs unique id.
+   *  the child's unique id.
    * @param {boolean} cascade
+   *  set to true to remove empty parents
    * @param {SieveAbstractElement} stop
+   *  element which stops the cascade
+   *
+   * @returns {SieveAbstractElement}
+   *  the removed node
    */
   removeChild(childId, cascade, stop) {
     // should we remove the whole node

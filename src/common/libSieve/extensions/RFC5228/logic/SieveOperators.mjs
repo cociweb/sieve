@@ -17,6 +17,8 @@ import { SieveTestList } from "./SieveTests.mjs";
 const MAX_QUOTE_LEN = 50;
 const BEFORE_OPERATOR = 0;
 const AFTER_OPERATOR = 1;
+const SINGLE_TEST = 1;
+const TEST_VALUE_INDEX = 1;
 
 /*
  * Currently we have only Unary Operators like not and Nary/Multary like anyof allof
@@ -189,8 +191,8 @@ SieveAnyOfAllOfTest.prototype.init
 SieveAnyOfAllOfTest.prototype.test
   = function (item, old) {
     if (typeof (item) === "undefined") {
-      if (this.tests.length === 1)
-        return this.tests[0][1];
+      if (this.tests.length === SINGLE_TEST)
+        return this.tests[0][TEST_VALUE_INDEX];
 
       throw new Error(".test() has more than one element");
     }
