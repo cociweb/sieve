@@ -34,7 +34,7 @@ jobs:
           REPO_LC="${REPO,,}"
           echo "tag=${GITHUB_REF#refs/tags/}" >> "$GITHUB_OUTPUT"
           echo "REPO_LC=${REPO_LC}" >> $GITHUB_ENV
-          echo "IMAGE_NAME=ghcr.io/${REPO_LC}/${REPO}" >> $GITHUB_ENV
+          echo "IMAGE_NAME=ghcr.io/${REPO_LC}" >> $GITHUB_ENV
 
 
       - name: Build and push release image
