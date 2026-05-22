@@ -12,65 +12,28 @@
 import gulp from 'gulp';
 
 import common from "./gulpfile.common.mjs";
-import app from "./gulpfile.app.mjs";
-import wx from "./gulpfile.wx.mjs";
 import path from 'path';
 
 const BUILD_DIR_TEST = path.join(common.BASE_DIR_BUILD, "test/");
+const BASE_DIR_WEB = "./src/web/";
 
 /**
- * Packs the unit test for the standalone application.
+ * Packs the unit test sources for the web application.
  */
-async function packageAppTests() {
+async function packageWebTests() {
   await gulp.src([
     common.BASE_DIR_COMMON + "/**",
-
-    // Filter out the rfc documents
     "!" + common.BASE_DIR_COMMON + "/libSieve/**/rfc*.txt",
     "!**/*.html",
-    "!**/appImage/**",
     "!**/doc/**",
     "!**/icons/**"
-  ], { encoding: false}).pipe(gulp.dest(`${BUILD_DIR_TEST}/app/`));
+  ], { encoding: false}).pipe(gulp.dest(`${BUILD_DIR_TEST}/web/`));
 
   await gulp.src([
-    path.join(app.BASE_DIR_APP, "/libs") + "/**",
-
-    // Filter out the rfc documents
+    path.join(BASE_DIR_WEB, "static/libs") + "/**",
     "!" + common.BASE_DIR_COMMON + "/libSieve/**/rfc*.txt",
-    "!**/*.html",
-    "!**/appImage/**",
-    "!**/doc/**",
-    "!**/icons/**"
-  ], { encoding: false}).pipe(gulp.dest(`${BUILD_DIR_TEST}/app/`));
-}
-
-/**
- * Packs the unit test for the web extension.
- */
-async function packageWxTests() {
-
-  await gulp.src([
-    common.BASE_DIR_COMMON + "/**",
-
-    // Filter out the rfc documents
-    "!" + common.BASE_DIR_COMMON + "/libSieve/**/rfc*.txt",
-    "!**/*.html",
-    "!**/appImage/**",
-    "!**/doc/**",
-    "!**/icons/**"
-  ], { encoding: false}).pipe(gulp.dest(`${BUILD_DIR_TEST}/wx/`));
-
-  await gulp.src([
-    path.join(wx.BASE_DIR_WX, "/libs") + "/**",
-
-    // Filter out the rfc documents
-    "!" + common.BASE_DIR_COMMON + "/libSieve/**/rfc*.txt",
-    "!**/*.html",
-    "!**/appImage/**",
-    "!**/doc/**",
-    "!**/icons/**"
-  ], { encoding: false}).pipe(gulp.dest(`${BUILD_DIR_TEST}/wx/`));
+    "!**/*.html"
+  ], { encoding: false}).pipe(gulp.dest(`${BUILD_DIR_TEST}/web/`));
 }
 
 /**
@@ -96,16 +59,14 @@ function watchTests() {
       './tests/**/*.json',
       './tests/**/*.js'],
     gulp.parallel(
-      packageAppTests,
-      packageWxTests,
+      packageWebTests,
       packageTestSuite)
   );
 }
 
 const packageTests = gulp.parallel(
   packageTestSuite,
-  packageAppTests,
-  packageWxTests
+  packageWebTests
 );
 
 export default {

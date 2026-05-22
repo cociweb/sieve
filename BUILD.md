@@ -1,77 +1,110 @@
 # Build instructions
 
-Over the time building and releasing got more and more complicated, so that gulp
-is now used to build and package the artifacts.
+Gulp builds the web application from `src/common` (shared libraries), `src/web`
+(static UI and Python proxy), and npm dependencies (Bootstrap, CodeMirror).
 
-The electron app, the web application addon as well as the thunderbird webextension
-share a common code base.
+## Prerequisites
 
-You find all app specific code in `src/app`, the WebExtension code is in `src/wx`
-and all the shared code can be found in `src/common`.
+- [Node.js](https://nodejs.org/) 22+
+- [Python](https://www.python.org/) 3.8+ (stdlib only, for the ManageSieve proxy)
+- [Docker](https://www.docker.com/) (optional, for containerized deployment)
 
 ## Getting started
 
-To get started clone the project for github and install [node](https://nodejs.org/en/).
+```bash
+git clone https://github.com/thsmi/sieve.git
+cd sieve
+npm ci
+```
 
-Then use `npm install` to download the dependencies, npm is shipped with [node](https://nodejs.org/en/).
-This will download gulp as well as codemirror, bootstrap, electron and everything else which is needed.
+Open the repository in [Visual Studio Code](https://code.visualstudio.com/) or use
+the included [Dev Container](.devcontainer/devcontainer.json).
 
-As editor I suggest [Visual Studio Code](https://code.visualstudio.com/)
+## Build the web UI
 
-## Developing the App
+```bash
+npx gulp web:package
+```
 
-The app is based upon electron. It is a JavaScript runtime which ships a Browser as UI.
-This makes developing is very straight forward and easy compared to a thunderbird addon.
+Output is written to `build/web/static/`.
 
-To package the app call:
+Watch mode for development:
 
-`gulp app:package`
+```bash
+npx gulp web:watch
+```
 
-Then give it a test and start the electron:
+## Local development (without Docker)
 
-`npm run start`
+### Python proxy + static files
 
-To speedup the development you can also use `gulp app:watch`. It will automatically
-update all changed files. The change will be instantly available in electron.
-You may need to reload the rendering process, by going to the menu bar and
-select `View->Reload` or `View->Force Reload`
+```bash
+npx gulp web:package
+cd src/web
+python main.py --dev --config config.template.ini
+```
 
-To finally package the electron app just run `gulp app:package-win32` or `gulp app:package-linux`.
+In `--dev` mode the Python server serves static files and exposes `/config.json`
+and `/websocket/` endpoints. Configure TLS certificate paths in `config.ini` if
+you need HTTPS locally.
 
-In case you need to inspect the UI's HTML debug the JavaScript, just select
-`View->Toggle Developer Tools`.
+### Unit tests
 
-## Developing the WebExtension
+```bash
+npm test
+npm run lint
+```
 
-WebExtensions are the new addon api for Thunderbird.
+## Docker deployment
 
-Internally they show similarities to electron.
+Build and run the production stack (Apache + Python proxy):
 
-The background page is the main entry point, it is a single instance and has
-neither direct access to the UI nor to any XPCOM functions.
+```bash
+docker compose up --build
+```
 
-The UI is realized by content tabs. These tabs contain normal HTML pages and
-communicate via a special messaging system with background page. They are
-basically only dumb renderers.
+- HTTP: http://localhost:8080 (redirects to HTTPS)
+- HTTPS: https://localhost:8443
 
-Calls to Thunderbird's core (XPCOM) are done in WebExtension Experiments. An
-Experiment is special privileged code which is allowed to access XPCOM. But only
-be accessed through a predefined and very limited API from the background page.
-You can find the APIs in `src/wx/api/sieve`
+Environment variables:
 
-To build the webextension call `gulp wx:package`. It creates a build directory
-(`build\thunderbird-wx`) relative to your sources root directory.
+| Variable | Default | Description |
+|----------|---------|-------------|
+| `DOVECOT_HOST` | `dovecot` | ManageSieve hostname (use with `--profile dev` or set to your server) |
+| `DOVECOT_PORT` | `4190` | ManageSieve port |
+| `AUTH_USER` | `user` | Fixed username for client-side authentication |
+| `SIEVE_LOG_LEVEL` | `info` | Proxy log level (`debug`, `info`, `warning`) |
 
-Then load the extension. Go to `Tools->Developer Tools->Debug Addons`, click on
-the `Load Temporary Extension` button and select the `manifest.json` in the build
-directory. This will load the addon in developer mode.
+### Apache TLS and authentication
 
-The UI offers buttons to reload and inspect the extension. Keep in mind, a reload
-just invalidates the background page and any content tabs. It does not reload the
-API. The only way to reload the API is a restart. Similarly the inspect button
-can only access the background page and the content tabs but not the Experiments
-privileged code.
+TLS is terminated by Apache using certificates in `/etc/apache2/certs/`. A
+self-signed certificate is generated on first start if none is mounted.
 
-In order to have the build folder updates upon changes to the source folder,
-just call `gulp wx:watch`. Gulp will monitor the source files and copies them
-upon change to the source directory.
+For reverse-proxy or SSO authentication, see
+[docker/apache/sieve-auth.conf.example](docker/apache/sieve-auth.conf.example).
+The proxy reads the username from the `X-Forwarded-User` header (configurable
+via `AuthUserHeader` in the Sieve config).
+
+### Security headers
+
+Apache sets HSTS, CSP, `X-Frame-Options`, and related headers. Basic output
+rate limiting is enabled via `mod_ratelimit`. Tune values in
+[docker/apache/sieve.conf](docker/apache/sieve.conf) for your deployment.
+
+## Publish Docker image
+
+Images are built and pushed to `ghcr.io/thsmi/sieve` by GitHub Actions on
+push to `main`/`master` and on version tags (`v*`).
+
+```bash
+docker build -t ghcr.io/thsmi/sieve:local .
+```
+
+## Project layout
+
+```
+src/common/     Shared Sieve editor and ManageSieve protocol code
+src/web/        Web UI (static/) and Python proxy (script/, main.py)
+docker/         Apache config, entrypoint, Docker config templates
+build/web/      Gulp output (generated)
+```

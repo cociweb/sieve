@@ -64,7 +64,7 @@
       scripts = scripts.map((script) => {
 
         if (script.startsWith("${workspace}/"))
-          script = script.replace("${workspace}/", "/test/wx/");
+          script = script.replace("${workspace}/", "/test/web/");
 
         if (script.startsWith("./../common/"))
           script = script.replace("./../common/libSieve/", "/gui/libSieve/");

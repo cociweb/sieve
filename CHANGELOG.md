@@ -2,11 +2,19 @@
 
 ***The changelog for newer releases can be found here https://github.com/thsmi/sieve/releases***
 
+## Sieve 0.7.0 - Web-only Docker release
+
+* **Breaking:** Removed Electron desktop app, Thunderbird WebExtension, and Azure DevOps pipelines.
+* **New:** Docker image with Apache 2 (TLS, security headers) and Python ManageSieve WebSocket proxy.
+* **New:** GitHub Actions CI and GHCR publish workflow (`ghcr.io/thsmi/sieve`).
+* **New:** Dev Container for web development.
+* **Changed:** Web frontend consolidated under `src/web/static/` with no app/wx dependencies.
+
 ## Sieve 0.2.3 - ([in Progress](https://github.com/thsmi/sieve/issues?milestone=2&state=open))
-Development builds can be found in the [Downloads section](https://github.com/thsmi/sieve/blob/master/nightly/README.md). 
+Development builds can be found in the [Downloads section](https://github.com/thsmi/sieve/blob/master/nightly/README.md).
 * [FIXED] [Quoted Strings ignored escape characters](https://github.com/thsmi/sieve/issues/8)
 * [FIXED] "Empty string passed to getElementById()" Warning
-* [UPDATED] Move to [CodeMirror v3.x](http://codemirror.net/) 
+* [UPDATED] Move to [CodeMirror v3.x](http://codemirror.net/)
 * [FIXED] AccountManager broken [because Mozilla changed nsISupportsArray's Interfaces](https://bugzilla.mozilla.org/show_bug.cgi?id=820377)
 * [FIXED] Autoconfig failed randomly with centos servers
 * [FIXED] [Thunderbirds default proxy configuration wasn't respected](https://github.com/thsmi/sieve/issues/15)
@@ -53,7 +61,7 @@ Development builds can be found in the [Downloads section](https://github.com/th
 * [NEW] Support Tabulator Key in the Editor
 * [NEW] Option to Force TLS
 * [NEW] Account Wizard
-  
+
 ## Sieve 0.1.12 - (04.04.2011)
 * [FIXED] Referrals
 * [FIXED] Detect timeouts more reliable
@@ -64,7 +72,7 @@ Development builds can be found in the [Downloads section](https://github.com/th
 * [NEW] [Postbox 2.x](http://www.postbox-inc.com/) support
 * [NEW] [Seamonkey](http://www.seamonkey-project.org/) support
 * [UDATED] Improved support for Thunderbird's offline mode
-  
+
 ## Sieve 0.1.10 - (01.08.2010)
 * [NEW] Toolbar button
 * [NEW] Support and Detect Thunderbird's offline mode
@@ -72,19 +80,19 @@ Development builds can be found in the [Downloads section](https://github.com/th
 * [UPDATED] Improve / reduce code footprint
 * [FIXED] Overriding expired certificates
 * [NEW] Tolerate non RFC conform response codes from broken cyrus servers
-  
+
 ## Sieve 0.1.9 - (08.02.2010)
 * [FIXED] Unusable Account Manager due to bad character in French locale
 * [UPDATED] French and German translations
 * [NEW] Russian locale
 * [NEW] Socks Proxy support
 * [NEW] [Postbox 1.x]("http://www.postbox-inc.com/") support
-  
+
 ## Sieve 0.1.8 (04.01.2010)
 * [FIXED] SASL CRAM-MD5
 * [FIXED] Use deprecated SASL LOGIN only as last resort
 * [NEW] Line numbers in editor
-  
+
 ## Sieve 0.1.7 (11.12.2009)
 * [NEW] CHECKSCRIPT, NOOP and RENAME command
 * [NEW] VERSION, MAXREDIRECTS, NOTIFY, LANGUAGE and OWNER capabilities
@@ -94,15 +102,15 @@ Development builds can be found in the [Downloads section](https://github.com/th
 * [FIXED] Exporting scripts on Linux
 * [NEW] Sort scripts by name
 * [FIXED] Renaming an active script on dovecot servers
-* [NEW] Implement Extension core as components   
-* [NEW] SASL CRAM-MD5 
-* [FIXED] Override bad certificates in Thunderbird 3 
+* [NEW] Implement Extension core as components
+* [NEW] SASL CRAM-MD5
+* [FIXED] Override bad certificates in Thunderbird 3
 * [NEW] French locale
-  
+
 ## Sieve 0.1.6 (12.10.2008)
 * [FIXED] Empty windows on Linux
-* [NEW] German locale  
-  
+* [NEW] German locale
+
 ## Sieve 0.1.5 (03.10.2008)
 * [NEW] Extended debug output
 * [NEW] SASL proxy authorization
@@ -116,26 +124,26 @@ Development builds can be found in the [Downloads section](https://github.com/th
 * [NEW] Sidebar with a Sieve Language reference
 * [UPDATED] custom authentication
 * [FIXED] UTF-8 compatibility issues
- 
+
 ## Sieve 0.1.4 (22.04.2007)
 * [FIXED] "SASL Login" mechanism
 * [FIXED] Large sieve scripts caused the extension to die silently due to packet fragmentation
 * [FIXED] UTF-8 compatibility issues
- 
+
 ## Sieve 0.1.3 (30.09.2006)
-* [NEW] SASL Login mechanism    
-* [FIXED] Line break related issues  
-  
+* [NEW] SASL Login mechanism
+* [FIXED] Line break related issues
+
 ## Sieve 0.1.2 (03.09.2006)
 * [NEW] Automatic Extension updates
 * [FIXED] Line break issue "line 1: syntax error,..."
 * [NEW] Rename button
 * [NEW] Debug mode
-  
+
 ## Sieve 0.1.1 (10.05.2006)
 * [NEW] Referrals
 * [UPDATED] Error handling improved
 * [FIXED] Settings dialog
-  
+
 ## Sieve 0.1.0 (01.05.2006)
 * [NEW] Initial release

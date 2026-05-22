@@ -1,25 +1,14 @@
 {
-  // Use IntelliSense to learn about possible attributes.
-  // Hover to view descriptions of existing attributes.
-  // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
   "version": "0.2.0",
   "configurations": [
-
     {
-      "name": "Python: Debug Sources",
+      "name": "Python: Web proxy (dev)",
       "type": "python",
       "request": "launch",
       "program": "${workspaceFolder}/src/web/main.py",
-      "args": ["--config=D:\\projekte\\sieve\\core\\src\\web\\config.ini"],
-      "console": "integratedTerminal"
-    },
-    {
-      "name": "Python: Debug Build ",
-      "type": "python",
-      "request": "launch",
-      "program": "${workspaceFolder}/build/web/main.py",
-      "args": ["--config=D:\\projekte\\sieve\\core\\src\\web\\config.ini"],
-      "console": "integratedTerminal"
+      "args": ["--dev", "--config=${workspaceFolder}/src/web/config.template.ini"],
+      "console": "integratedTerminal",
+      "cwd": "${workspaceFolder}/src/web"
     },
     {
       "name": "Python: Current File",
@@ -33,18 +22,10 @@
       "request": "launch",
       "name": "Run Unit Tests",
       "program": "${workspaceFolder}/tests/index.js",
+      "args": ["${workspaceFolder}/build/test/web"],
       "skipFiles": [
         "<node_internals>/**"
       ]
-    },
-    {
-      "type": "node",
-      "request": "launch",
-      "name": "Launch Program",
-      "skipFiles": [
-        "<node_internals>/**"
-      ],
-      "program": "${workspaceFolder}\\build\\electron\\resources\\"
     }
   ]
 }

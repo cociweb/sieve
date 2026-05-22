@@ -6,6 +6,8 @@
   const path = require("path");
   const fs = require('fs');
 
+  let testWorkspace = path.join(__dirname, "../../../build/test/web");
+
   /**
    * Implements a sandbox to run the unit tests.
    * It uses a separate node context.
@@ -108,7 +110,7 @@
 
         // FIXME : Should be read from a config ...
         if (script.startsWith("${workspace}"))
-          script = script.replace("${workspace}", path.join(__dirname, "../../../build/test/app"));
+          script = script.replace("${workspace}", testWorkspace);
 
         script = path.normalize(script);
 
@@ -263,6 +265,16 @@
    * Adapts the test fixture to a browser based runtime environment.
    */
   class NodeTestSuite extends AbstractTestSuite {
+
+    /**
+     * @param {string} [workspace]
+     *   path to the packaged test sources
+     */
+    constructor(workspace) {
+      super();
+      if (workspace)
+        testWorkspace = path.resolve(workspace);
+    }
 
     /**
      * @inheritdoc

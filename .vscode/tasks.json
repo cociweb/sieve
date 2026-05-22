@@ -1,20 +1,10 @@
 {
-  // See https://go.microsoft.com/fwlink/?LinkId=733558
-  // for the documentation about the tasks.json format
   "version": "2.0.0",
   "tasks": [
     {
       "label": "Run eslint",
       "type": "shell",
-      "windows": {
-        "command": ".\\node_modules\\.bin\\eslint"
-      },
-      "linux": {
-        "command": "./node_modules/.bin/eslint"
-      },
-      "osx": {
-        "command": "./node_modules/.bin/eslint"
-      },
+      "command": "./node_modules/.bin/eslint",
       "promptOnClose": false,
       "presentation": {
         "echo": true,
@@ -23,6 +13,39 @@
         "panel": "shared"
       },
       "problemMatcher": "$eslint-stylish"
+    },
+    {
+      "label": "gulp web:watch",
+      "type": "shell",
+      "command": "npx gulp web:watch",
+      "isBackground": true,
+      "problemMatcher": []
+    },
+    {
+      "label": "gulp web:package",
+      "type": "shell",
+      "command": "npx gulp web:package",
+      "problemMatcher": []
+    },
+    {
+      "label": "npm test",
+      "type": "shell",
+      "command": "npm test",
+      "problemMatcher": []
+    },
+    {
+      "label": "docker compose up",
+      "type": "shell",
+      "command": "docker compose up --build",
+      "isBackground": true,
+      "problemMatcher": []
+    },
+    {
+      "label": "docker compose up (dev profile)",
+      "type": "shell",
+      "command": "docker compose --profile dev up --build",
+      "isBackground": true,
+      "problemMatcher": []
     }
   ]
 }

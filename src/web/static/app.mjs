@@ -32,13 +32,6 @@ import { SieveI18n } from "./libs/managesieve.ui/utils/SieveI18n.mjs";
 
   const actions = {
 
-    // "update-check"
-    // "update-goto-url"
-    // "import-thunderbird"
-    // "account-probe"
-    // "account-create"
-    // "account-delete"
-
     // account endpoints...
     "accounts-list": function () {
       logger.logAction("List Accounts");
@@ -297,12 +290,12 @@ import { SieveI18n } from "./libs/managesieve.ui/utils/SieveI18n.mjs";
       await sessions.get(account).putScript(name, script);
     },
 
-    "copy": function (msg) {
-      require("electron").clipboard.writeText(msg.payload.data);
+    "copy": async function (msg) {
+      await navigator.clipboard.writeText(msg.payload.data);
     },
 
-    "paste": function () {
-      return require("electron").clipboard.readText();
+    "paste": async function () {
+      return await navigator.clipboard.readText();
     },
 
     "get-preference": async (msg) => {

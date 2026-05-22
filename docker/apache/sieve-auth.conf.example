@@ -1,0 +1,17 @@
+# Optional Apache authentication example for Sieve Web.
+# Include this file from sieve.conf when deploying behind SSO or basic auth.
+#
+# Example: inject authenticated username for client-side ManageSieve auth
+#
+# <Location "/">
+#   AuthType Basic
+#   AuthName "Sieve"
+#   AuthUserFile /etc/apache2/.htpasswd
+#   Require valid-user
+#   RequestHeader set X-Forwarded-User expr=%{REMOTE_USER}
+# </Location>
+#
+# Proxy routes must forward auth headers to the Python proxy:
+#
+# RequestHeader unset X-Forwarded-User early
+# RequestHeader set X-Forwarded-User expr=%{REMOTE_USER}

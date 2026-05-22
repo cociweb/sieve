@@ -1,0 +1,28 @@
+{
+  "name": "Sieve Web",
+  "dockerComposeFile": "docker-compose.dev.yml",
+  "service": "dev",
+  "workspaceFolder": "/workspaces/sieve",
+  "features": {
+    "ghcr.io/devcontainers/features/python:1": {
+      "version": "3.12"
+    },
+    "ghcr.io/devcontainers/features/docker-in-docker:2": {}
+  },
+  "forwardPorts": [8080, 8443, 8765, 4190],
+  "postCreateCommand": "npm ci || npm install --no-bin-links",
+  "postStartCommand": "node node_modules/gulp/bin/gulp.js web:package",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "dbaeumer.vscode-eslint",
+        "ms-python.python",
+        "ms-azuretools.vscode-docker",
+        "mrmlnc.vscode-apache"
+      ],
+      "settings": {
+        "python.defaultInterpreterPath": "/usr/local/bin/python"
+      }
+    }
+  }
+}

@@ -304,20 +304,6 @@
     ]
   });
 
-  tests.set("app-updater", {
-    script: "${workspace}/managesieve.ui/updater/tests/SieveUpdaterTest.mjs",
-    require: [
-      "${workspace}/managesieve.ui/updater/SieveUpdater.mjs"
-    ]
-  });
-
-  tests.set("app-importer", {
-    script: "${workspace}/managesieve.ui/importer/tests/SieveThunderbirdProfileTest.mjs",
-    require: [
-      "${workspace}/managesieve.ui/importer/logic/SieveThunderbirdProfile.mjs"
-    ]
-  });
-
 
   exports.tests = tests;
 

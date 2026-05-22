@@ -22,7 +22,7 @@ const util = require('util');
 const SERVER_PORT = 8125;
 
 const GUI_URL = "gui/";
-const GUI_PATH = "./build/electron/resources/libs";
+const GUI_PATH = "./build/web/static";
 
 const TEST_URL = "test/";
 const TEST_PATH = "./build/test";

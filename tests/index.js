@@ -6,6 +6,7 @@ const { NodeTestReport } = require("./js/node//NodeTestReport.js");
 const { JUnitExporter } = require("./js/exporter/JUnitExporter.js");
 
 const { writeFile } = require('fs').promises;
+const path = require('path');
 
 const EXIT_CODE_ERROR = 1;
 const JUNIT_EXPORT_FILE = "./TEST-sieve.xml";
@@ -15,7 +16,8 @@ const JUNIT_EXPORT_FILE = "./TEST-sieve.xml";
  */
 async function main() {
 
-  const suite = new NodeTestSuite();
+  const workspace = process.argv[2] || path.join(__dirname, "../build/test/web");
+  const suite = new NodeTestSuite(workspace);
   const report = new NodeTestReport("Test");
 
   await suite.load(tests).run(report);

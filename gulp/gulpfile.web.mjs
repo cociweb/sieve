@@ -17,8 +17,6 @@ import path from 'path';
 const BUILD_DIR_WEB = path.join(common.BASE_DIR_BUILD, "web/");
 
 const BASE_DIR_WEB = "./src/web/";
-const BASE_DIR_WX = "./src/wx/";
-const BASE_DIR_APP = "./src/app/";
 
 
 /**
@@ -98,12 +96,10 @@ function packageIcons() {
  */
 function packageLibManageSieve() {
 
-  const BASE_WX = path.join(BASE_DIR_WX, "libs/libManageSieve");
   const BASE_WEB = path.join(BASE_DIR_WEB, "static/libs/libManageSieve");
   const BASE_COMMON = path.join(common.BASE_DIR_COMMON, "libManageSieve");
 
   return common.src2(BASE_WEB)
-    .pipe(common.src2(BASE_WX, ["SieveTimer.mjs", "SieveBase64.mjs"]))
     .pipe(common.src2(BASE_COMMON))
     .pipe(gulp.dest(path.join(BUILD_DIR_WEB, 'static/libs/libManageSieve')));
 }
@@ -129,26 +125,7 @@ function packageManageSieveUi() {
 }
 
 /**
- * Copies the common managesieve.ui files into the app's lib folder
- *
- * @returns {Stream}
- *   a stream to be consumed by gulp
- */
-function packageManageSieveUiApp() {
-
-  const destination = path.join(BUILD_DIR_WEB, 'static/libs/managesieve.ui');
-  const base = path.join(BASE_DIR_APP, "libs/managesieve.ui");
-
-  return gulp.src([
-    `${BASE_DIR_APP}/css/navbar-top-fixed.css`,
-    path.join(base, "/tabs/*.mjs"),
-    path.join(base, "/tabs/*.html"),
-    path.join(base, "/utils/SieveIpcClient.mjs")
-  ], { base: base, encoding: false }).pipe(gulp.dest(destination));
-}
-
-/**
- * Zips the build directory and creates a XPI inside the release folder.
+ * Zips the build directory and creates a zip inside the release folder.
  */
 async function packageZip() {
 
@@ -174,7 +151,6 @@ function watch() {
     gulp.parallel(
       packageSrc,
       packageManageSieveUi,
-      packageManageSieveUiApp,
       packageLibSieve,
       packageLibManageSieve)
   );
@@ -196,7 +172,6 @@ export default {
       packageLibManageSieve,
       packageLibSieve,
       packageManageSieveUi,
-      packageManageSieveUiApp,
       packageIcons
     ),
     packageSrc

@@ -1,0 +1,29 @@
+services:
+  dev:
+    image: mcr.microsoft.com/devcontainers/javascript-node:22
+    volumes:
+      - ..:/workspaces/sieve:cached
+    command: sleep infinity
+
+  websieve:
+    build:
+      context: ..
+      dockerfile: Dockerfile
+    environment:
+      SIEVE_LOG_LEVEL: debug
+      DOVECOT_HOST: dovecot
+      DOVECOT_PORT: "4190"
+      AUTH_USER: user
+    ports:
+      - "8080:80"
+      - "8443:443"
+    profiles:
+      - fullstack
+
+  dovecot:
+    build:
+      context: ../tools/Docker/dovecot
+    ports:
+      - "4190:4190"
+    profiles:
+      - fullstack

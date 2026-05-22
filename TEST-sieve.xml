@@ -1,0 +1,320 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites name="Test" tests="" errors="" failures="" >
+  <testsuite failures="" name="sieve-scripts" tests="20" time="0.234" timestamp="2026-05-22T20:22:41">
+    <testcase name="Test Case insensitivity" time="0.01"></testcase>
+    <testcase name="Single line comment" time="0.002"></testcase>
+    <testcase name="Multiline comment" time="0.002"></testcase>
+    <testcase name="Example 1" time="0.003"></testcase>
+    <testcase name="Example 2" time="0.002"></testcase>
+    <testcase name="Example 2a (with linebreaks in comparator)" time="0.002"></testcase>
+    <testcase name="Example 2b (with linebreaks in comparator)" time="0.001"></testcase>
+    <testcase name="Example 3" time="0.001"></testcase>
+    <testcase name="Example 4" time="0.002"></testcase>
+    <testcase name="Example 5" time="0.003"></testcase>
+    <testcase name="Example 6" time="0.001"></testcase>
+    <testcase name="Example 7" time="0.001"></testcase>
+    <testcase name="Example 8" time="0.001"></testcase>
+    <testcase name="Example 9" time="0.001"></testcase>
+    <testcase name="Example 10" time="0.002"></testcase>
+    <testcase name="Example 11" time="0.002"></testcase>
+    <testcase name="Example 12" time="0"></testcase>
+    <testcase name="Example Sieve Filter" time="0.004"></testcase>
+    <testcase name="Boolean true" time="0"></testcase>
+    <testcase name="Boolean false" time="0.001"></testcase>
+  </testsuite>
+
+  <testsuite failures="" name="sieve-elements" tests="1" time="0.074" timestamp="2026-05-22T20:22:41">
+    <testcase name="Test header constructors" time="0.006"></testcase>
+  </testsuite>
+
+  <testsuite failures="" name="sieve-atoms" tests="1" time="0.069" timestamp="2026-05-22T20:22:41">
+    <testcase name="Escaped quoted strings" time="0.005"></testcase>
+  </testsuite>
+
+  <testsuite failures="" name="matchTypes" tests="3" time="0.073" timestamp="2026-05-22T20:22:41">
+    <testcase name="Parse :is match-type" time="0.006"></testcase>
+    <testcase name="Parse :matches match-type" time="0.002"></testcase>
+    <testcase name="Parse :contains match-type" time="0.001"></testcase>
+  </testsuite>
+
+  <testsuite failures="" name="variables" tests="10" time="0.102" timestamp="2026-05-22T20:22:41">
+    <testcase name="Simple Set Actions without modifiers" time="0.008"></testcase>
+    <testcase name="Complex Set Action without modifiers" time="0.003"></testcase>
+    <testcase name="Complex Set Action with modifiers" time="0.002"></testcase>
+    <testcase name="Match Variables Example" time="0.007"></testcase>
+    <testcase name="Test string" time="0.002"></testcase>
+    <testcase name="Manipulate SetVariable - No values set - Set all values (upper)" time="0.002"></testcase>
+    <testcase name="Manipulate SetVariable - No values set - Set all values (lower)" time="0.001"></testcase>
+    <testcase name="Manipulate SetVariable - All values set - Remove all values" time="0.002"></testcase>
+    <testcase name="Validate set action constructors" time="0.001"></testcase>
+    <testcase name="Validate string test constructors" time="0.001"></testcase>
+  </testsuite>
+
+  <testsuite failures="" name="regex" tests="2" time="0.085" timestamp="2026-05-22T20:22:41">
+    <testcase name="Parse :regex match-type with single import" time="0.008"></testcase>
+    <testcase name="Parse :regex match-type with multiple import" time="0.003"></testcase>
+  </testsuite>
+
+  <testsuite failures="" name="reject" tests="3" time="0.084" timestamp="2026-05-22T20:22:41">
+    <testcase name="Example 1" time="0.009"></testcase>
+    <testcase name="Example 2" time="0.002"></testcase>
+    <testcase name="Example 3" time="0.002"></testcase>
+  </testsuite>
+
+  <testsuite failures="" name="body" tests="3" time="0.09" timestamp="2026-05-22T20:22:41">
+    <testcase name="Parse body transform :raw" time="0.009"></testcase>
+    <testcase name="Parse body transform :content" time="0.004"></testcase>
+    <testcase name="Parse body transform :text" time="0.002"></testcase>
+  </testsuite>
+
+  <testsuite failures="" name="vacation" tests="13" time="0.118" timestamp="2026-05-22T20:22:41">
+    <testcase name="Parse Vacation Example 1" time="0.01"></testcase>
+    <testcase name="Parse Vacation Example 2" time="0.002"></testcase>
+    <testcase name="Parse Vacation Example 3" time="0.002"></testcase>
+    <testcase name="Parse Vacation Example 4" time="0.002"></testcase>
+    <testcase name="Parse Vacation Example 5" time="0.004"></testcase>
+    <testcase name="Parse Vacation Example 6 " time="0.003"></testcase>
+    <testcase name="Parse Vacation Example 7" time="0.002"></testcase>
+    <testcase name="Parse Vacation Example 8" time="0.003"></testcase>
+    <testcase name="Parse Vacation :from " time="0.002"></testcase>
+    <testcase name="Manipulate Vacation Element - No values set - Set all values" time="0.003"></testcase>
+    <testcase name="Manipulate Vacation Element - All values set - Change all values" time="0.003"></testcase>
+    <testcase name="Manipulate Vacation Element - All values set - Remove all values" time="0.001"></testcase>
+    <testcase name="Validate vacation action's constructor" time="0.001"></testcase>
+  </testsuite>
+
+  <testsuite failures="" name="vacation-seconds" tests="2" time="0.091" timestamp="2026-05-22T20:22:41">
+    <testcase name="Parse Vacation Seconds Example 1" time="0.007"></testcase>
+    <testcase name="Parse Vacation Seconds Example 2" time="0.001"></testcase>
+  </testsuite>
+
+  <testsuite failures="" name="include" tests="6" time="0.145" timestamp="2026-05-22T20:22:42">
+    <testcase name="return test" time="0.007"></testcase>
+    <testcase name="include ambiguous location " time="0.002"></testcase>
+    <testcase name="include multiple scripts" time="0.003"></testcase>
+    <testcase name="include test2" time="0.004"></testcase>
+    <testcase name="multiple globals" time="0.002"></testcase>
+    <testcase name="single global" time="0.001"></testcase>
+  </testsuite>
+
+  <testsuite failures="" name="relational" tests="5" time="0.09" timestamp="2026-05-22T20:22:42">
+    <testcase name="Extended Example test" time="0.016"></testcase>
+    <testcase name="Invalid operator" time="0.001"></testcase>
+    <testcase name="Missing operator" time="0.001"></testcase>
+    <testcase name="Validate :value constructors" time="0.001"></testcase>
+    <testcase name="Validate :count constructors" time="0"></testcase>
+  </testsuite>
+
+  <testsuite failures="" name="mailbox" tests="6" time="0.103" timestamp="2026-05-22T20:22:42">
+    <testcase name="Testing fileinto :create" time="0.009"></testcase>
+    <testcase name="Testing mailboxexists" time="0.002"></testcase>
+    <testcase name="Testing metadataexists" time="0.001"></testcase>
+    <testcase name="Testing metadata" time="0.002"></testcase>
+    <testcase name="Testing servermetadataexists" time="0.002"></testcase>
+    <testcase name="Testing servermetadata" time="0.001"></testcase>
+  </testsuite>
+
+  <testsuite failures="" name="subaddress" tests="1" time="0.111" timestamp="2026-05-22T20:22:42">
+    <testcase name="Parse Subaddress Example 1" time="0.013"></testcase>
+  </testsuite>
+
+  <testsuite failures="" name="copy" tests="2" time="0.109" timestamp="2026-05-22T20:22:42">
+    <testcase name="RFC 3894 - Example I" time="0.008"></testcase>
+    <testcase name="RFC 3894 - Example Ia" time="0.001"></testcase>
+  </testsuite>
+
+  <testsuite failures="" name="imapflags" tests="9" time="0.132" timestamp="2026-05-22T20:22:42">
+    <testcase name="RFC5232 Snippet I" time="0.008"></testcase>
+    <testcase name="RFC5232 Snippet II" time="0.002"></testcase>
+    <testcase name="RFC5232 Snippet III" time="0.003"></testcase>
+    <testcase name="RFC5232 Snippet IV" time="0.003"></testcase>
+    <testcase name="RFC5232 Snippet V" time="0.003"></testcase>
+    <testcase name="RFC5232 Snippet VI" time="0.007"></testcase>
+    <testcase name="RFC5232 Snippet VII" time="0.002"></testcase>
+    <testcase name="RFC5232 Snippet VIII" time="0.002"></testcase>
+    <testcase name="Extended Example" time="0.011"></testcase>
+  </testsuite>
+
+  <testsuite failures="" name="editheader" tests="6" time="0.129" timestamp="2026-05-22T20:22:42">
+    <testcase name="RFC5293 Snippet I" time="0.01"></testcase>
+    <testcase name="RFC5293 Snippet II" time="0.002"></testcase>
+    <testcase name="RFC5293 Snippet III" time="0.002"></testcase>
+    <testcase name="RFC5293 Snippet IV" time="0.002"></testcase>
+    <testcase name="RFC5293 Snippet V" time="0.001"></testcase>
+    <testcase name="RFC5293 Snippet VI" time="0.001"></testcase>
+  </testsuite>
+
+  <testsuite failures="" name="date" tests="9" time="0.114" timestamp="2026-05-22T20:22:42">
+    <testcase name="RFC5260 Snippet I" time="0.009"></testcase>
+    <testcase name="RFC5260 Snippet II" time="0.003"></testcase>
+    <testcase name="RFC5260 Snippet III" time="0.002"></testcase>
+    <testcase name="RFC5260 Snippet IV" time="0.003"></testcase>
+    <testcase name="RFC5260 Snippet V" time="0.005"></testcase>
+    <testcase name="RFC5260 Snippet VIa" time="0.001"></testcase>
+    <testcase name="RFC5260 Snippet VI" time="0.002"></testcase>
+    <testcase name="Validate date test constructor" time="0.001"></testcase>
+    <testcase name="Validate currentdate test constructor" time="0.001"></testcase>
+  </testsuite>
+
+  <testsuite failures="" name="duplicate" tests="8" time="0.126" timestamp="2026-05-22T20:22:43">
+    <testcase name="Snippet 1" time="0.009"></testcase>
+    <testcase name="Snippet 2" time="0.003"></testcase>
+    <testcase name="Snippet 3" time="0.006"></testcase>
+    <testcase name="Example 1" time="0.003"></testcase>
+    <testcase name="Example 2" time="0.003"></testcase>
+    <testcase name="Example 3a" time="0.005"></testcase>
+    <testcase name="Example 3b" time="0.006"></testcase>
+    <testcase name="Example 4" time="0.004"></testcase>
+  </testsuite>
+
+  <testsuite failures="" name="spamtest" tests="6" time="0.107" timestamp="2026-05-22T20:22:43">
+    <testcase name="Example 0 (Spamtest)" time="0.007"></testcase>
+    <testcase name="Example 0 (Spamtestplus)" time="0.003"></testcase>
+    <testcase name="Example 1" time="0.005"></testcase>
+    <testcase name="Example 2" time="0.002"></testcase>
+    <testcase name="Example 3" time="0.004"></testcase>
+    <testcase name="Example 4" time="0.003"></testcase>
+  </testsuite>
+
+  <testsuite failures="" name="environment" tests="3" time="0.09" timestamp="2026-05-22T20:22:43">
+    <testcase name="Example 1" time="0.009"></testcase>
+    <testcase name="Example 2" time="0.001"></testcase>
+    <testcase name="Validate environment test constructor" time="0.002"></testcase>
+  </testsuite>
+
+  <testsuite failures="" name="convert" tests="2" time="0.089" timestamp="2026-05-22T20:22:43">
+    <testcase name="RFC 6558 - Example I" time="0.006"></testcase>
+    <testcase name="RFC 6558 - Example 2" time="0.003"></testcase>
+  </testsuite>
+
+  <testsuite failures="" name="notify" tests="6" time="0.128" timestamp="2026-05-22T20:22:43">
+    <testcase name="Notify Example 1" time="0.016"></testcase>
+    <testcase name="Notify Example 2" time="0.006"></testcase>
+    <testcase name="Notify Example 3" time="0.006"></testcase>
+    <testcase name="Notify Example 4" time="0.001"></testcase>
+    <testcase name="Notify Example 5" time="0.003"></testcase>
+    <testcase name="Notify Example 6" time="0.001"></testcase>
+  </testsuite>
+
+  <testsuite failures="" name="pipe" tests="7" time="0.122" timestamp="2026-05-22T20:22:43">
+    <testcase name="Pipe Example I" time="0.009"></testcase>
+    <testcase name="Pipe Example II" time="0.003"></testcase>
+    <testcase name="Pipe Example III" time="0.004"></testcase>
+    <testcase name="Pipe Example IV" time="0.002"></testcase>
+    <testcase name="Pipe Example V" time="0.002"></testcase>
+    <testcase name="Pipe Example VI" time="0.003"></testcase>
+    <testcase name="Pipe Example VII" time="0.002"></testcase>
+  </testsuite>
+
+  <testsuite failures="" name="examples-fastmail" tests="9" time="0.132" timestamp="2026-05-22T20:22:43">
+    <testcase name="FastMail - File all messages from a recipient into a folder" time="0.011"></testcase>
+    <testcase name="FastMail - File all messages from a domain into a folder" time="0.002"></testcase>
+    <testcase name="FastMail - File all undefined addresses at a virtual domain into a folder" time="0.006"></testcase>
+    <testcase name="FastMail - File messages to some aliases into alias-dependent folders" time="0.006"></testcase>
+    <testcase name="FastMail - Spam filtering for SpamAssassin score" time="0.006"></testcase>
+    <testcase name="FastMail - Spam filtering based on Bayesian filter)" time="0.002"></testcase>
+    <testcase name="FastMail - Filtering known messages as sent" time="0.002"></testcase>
+    <testcase name="FastMail - Do not filter known senders" time="0.003"></testcase>
+    <testcase name="FastMail - Time-sensitive notification example" time="0.004"></testcase>
+  </testsuite>
+
+  <testsuite failures="" name="examples-dovecot" tests="15" time="0.156" timestamp="2026-05-22T20:22:43">
+    <testcase name="Dovecot - Mail filtering by various headers I" time="0.014"></testcase>
+    <testcase name="Mail filtering by various headers II" time="0.003"></testcase>
+    <testcase name="Flagging or Highlighting your mail I" time="0.003"></testcase>
+    <testcase name="Flagging or Highlighting your mail II" time="0.002"></testcase>
+    <testcase name="Direct filtering using message header I" time="0.001"></testcase>
+    <testcase name="Direct filtering using message header II" time="0.001"></testcase>
+    <testcase name="Direct filtering using message header III" time="0.002"></testcase>
+    <testcase name="Filtering using the spamtest and virustest extensions I" time="0.004"></testcase>
+    <testcase name="Filtering using the spamtest and virustest extensions II" time="0.004"></testcase>
+    <testcase name="Plus Addressed mail filtering I" time="0.001"></testcase>
+    <testcase name="Plus Addressed mail filtering II" time="0.004"></testcase>
+    <testcase name="Vacation auto-reply I" time="0.003"></testcase>
+    <testcase name="Vacation auto-reply II" time="0.003"></testcase>
+    <testcase name="Include scripts" time="0.001"></testcase>
+    <testcase name="Archiving a Mailinglist by Date" time="0.007"></testcase>
+  </testsuite>
+
+  <testsuite failures="" name="examples-tty1" tests="10" time="0.142" timestamp="2026-05-22T20:22:44">
+    <testcase name="TTY1 Example I" time="0.01"></testcase>
+    <testcase name="TTY1 Example II" time="0.001"></testcase>
+    <testcase name="TTY1 Example III" time="0.005"></testcase>
+    <testcase name="TTY1 Example IV" time="0.003"></testcase>
+    <testcase name="TTY1 Example V" time="0.004"></testcase>
+    <testcase name="TTY1 Example VI" time="0.002"></testcase>
+    <testcase name="TTY1 Example VII" time="0.002"></testcase>
+    <testcase name="TTY1 Example VIII" time="0.003"></testcase>
+    <testcase name="TTY1 Example IX" time="0.004"></testcase>
+    <testcase name="TTY1 Example X" time="0.002"></testcase>
+  </testsuite>
+
+  <testsuite failures="" name="managesieve-crypto" tests="2" time="0.084" timestamp="2026-05-22T20:22:44">
+    <testcase name="Crypto SHA1 Hi()" time="0.01"></testcase>
+    <testcase name="Normalize(str)" time="0"></testcase>
+  </testsuite>
+
+  <testsuite failures="" name="managesieve-sasl-request" tests="17" time="0.183" timestamp="2026-05-22T20:22:44">
+    <testcase name="SASL Plain" time="0.002"></testcase>
+    <testcase name="SASL Plain with special Characters" time="0.001"></testcase>
+    <testcase name="SASL Plain with many Characters" time="0"></testcase>
+    <testcase name="SASL Scram SHA1 - Short" time="0.016"></testcase>
+    <testcase name="SASL Scram SHA1 - Long" time="0.004"></testcase>
+    <testcase name="SASL Scram SHA1 with Special Characters - Long" time="0.004"></testcase>
+    <testcase name="SASL Scram SHA1 with many special characters - Long" time="0.005"></testcase>
+    <testcase name="SASL Scram SHA1 - Short - Invalid Verification" time="0.004"></testcase>
+    <testcase name="SASL Scram SHA1 - Long - Invalid Verification" time="0.005"></testcase>
+    <testcase name="SASL Scram SHA256 - Short" time="0.004"></testcase>
+    <testcase name="SASL Scram SHA256 - Long" time="0.006"></testcase>
+    <testcase name="SASL Scram SHA256 with Special Characters - Long" time="0.005"></testcase>
+    <testcase name="SASL Scram SHA256 with many special characters - Long" time="0.005"></testcase>
+    <testcase name="SASL Scram SHA256 - Short  - Invalid Verification" time="0.005"></testcase>
+    <testcase name="SASL Scram SHA256 - Long - Invalid Verification" time="0.005"></testcase>
+    <testcase name="SASL External" time="0"></testcase>
+    <testcase name="SASL Login" time="0.001"></testcase>
+  </testsuite>
+
+  <testsuite failures="" name="managesieve-base64" tests="29" time="0.059" timestamp="2026-05-22T20:22:44">
+    <testcase name="Base64 Decoder - Empty String" time="0.001"></testcase>
+    <testcase name="Base64 Decoder - Zg==" time="0"></testcase>
+    <testcase name="Base64 Decoder - Zm8=" time="0.001"></testcase>
+    <testcase name="Base64 Decoder - Zm9v" time="0"></testcase>
+    <testcase name="Base64 Decoder - Zm9vYg==" time="0.001"></testcase>
+    <testcase name="Base64 Decoder - Zm9vYmE=" time="0"></testcase>
+    <testcase name="Base64 Decoder - Zm9vYmFy" time="0"></testcase>
+    <testcase name="Base64 Decoder - YW55IGNhcm5hbCBwbGVhcw" time="0.001"></testcase>
+    <testcase name="Base64 Decoder - YW55IGNhcm5hbCBwbGVhcw==" time="0"></testcase>
+    <testcase name="Base64 Decoder - YW55IGNhcm5hbCBwbGVhc3U" time="0"></testcase>
+    <testcase name="Base64 Decoder - YW55IGNhcm5hbCBwbGVhc3U=" time="0"></testcase>
+    <testcase name="Base64 Decoder - YW55IGNhcm5hbCBwbGVhc3Vy" time="0"></testcase>
+    <testcase name="Base64 Decoder - YW55IGNhcm5hbCBwbGVhc3VyZQ==" time="0"></testcase>
+    <testcase name="Base64 Decoder - dj1wZVI4RWI2dU5mNFpkN0h6SjB2N09CZy9DNWN4cEtWdU1SeDNsY25hT2hFPQ=" time="0"></testcase>
+    <testcase name="Base64 Decoder - peR8Eb6uNf4Zd7HzJ0v7OBg/C5cxpKVuMRx3lcnaOhE=" time="0"></testcase>
+    <testcase name="Base64 Decoder - peR8Eb6uNf4Zd7HzJ0v7OBg/C5cxpKVuMRx3lcnaOhE" time="0"></testcase>
+    <testcase name="Base64 Encoder - Empty String" time="0.001"></testcase>
+    <testcase name="Base64 Encoder - Zg==" time="0.001"></testcase>
+    <testcase name="Base64 Encoder - Zm8=" time="0"></testcase>
+    <testcase name="Base64 Encoder - Zm9v" time="0.001"></testcase>
+    <testcase name="Base64 Encoder - Zm9vYg==" time="0"></testcase>
+    <testcase name="Base64 Encoder - Zm9vYmE=" time="0"></testcase>
+    <testcase name="Base64 Encoder - Zm9vYmFy" time="0"></testcase>
+    <testcase name="Base64 Encoder - YW55IGNhcm5hbCBwbGVhcw==" time="0.001"></testcase>
+    <testcase name="Base64 Encoder - YW55IGNhcm5hbCBwbGVhc3U=" time="0"></testcase>
+    <testcase name="Base64 Encoder - YW55IGNhcm5hbCBwbGVhc3Vy" time="0"></testcase>
+    <testcase name="Base64 Encoder - YW55IGNhcm5hbCBwbGVhc3VyZQ==" time="0.001"></testcase>
+    <testcase name="Base64 Encoder - dj1wZVI4RWI2dU5mNFpkN0h6SjB2N09CZy9DNWN4cEtWdU1SeDNsY25hT2hFPQ==" time="0"></testcase>
+    <testcase name="Base64 Encoder - peR8Eb6uNf4Zd7HzJ0v7OBg/C5cxpKVuMRx3lcnaOhE=" time="0"></testcase>
+  </testsuite>
+
+  <testsuite failures="" name="managesieve-url" tests="7" time="0.064" timestamp="2026-05-22T20:22:44">
+    <testcase name="Parsing sieve://host" time="0.001"></testcase>
+    <testcase name="Parsing sieve://user@host" time="0.001"></testcase>
+    <testcase name="Parsing sieve://user:password@host" time="0"></testcase>
+    <testcase name="Parsing sieve://host:1234" time="0"></testcase>
+    <testcase name="Parsing sieve://user@host:1234" time="0.001"></testcase>
+    <testcase name="Parsing sieve://user:password@host:1234" time="0"></testcase>
+    <testcase name="Parsing sieve://c3.mail.example.com" time="0"></testcase>
+  </testsuite>
+
+
+</testsuites>

@@ -13,10 +13,7 @@ import { SieveAccount } from "./SieveAccount.mjs";
 import { SieveAbstractAccounts } from "./SieveAbstractAccounts.mjs";
 
 /**
- * Manages the configuration for sieve accounts.
- * It queries thunderbird's account and extracts all needed information.
- *
- * Global settings are stored in the addons persistence.
+ * Manages the configuration for sieve accounts loaded from the server config.
  */
 class SieveAccounts extends SieveAbstractAccounts {
 

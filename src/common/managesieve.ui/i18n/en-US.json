@@ -33,9 +33,8 @@
   "account.capabilities.languages" : "Languages",
 
   "accounts.create.title" : "Add or Import",
-  "accounts.create.description": "Add a new account to the Sieve app or import an existing configuration from Thunderbird",
+  "accounts.create.description": "Add a new account to the Sieve application",
   "accounts.create.add" : "Add Server",
-  "accounts.create.import.thunderbird" : "Import from Thunderbird",
   "accounts.create.import.file" : "Import from file",
 
   "account.create.title" : "Create Account",
