@@ -78,7 +78,7 @@ fi
 echo "Using TLS certificate: $SSL_CERTIFICATE_FILE"
 echo "Using TLS private key: $SSL_CERTIFICATE_KEY_FILE"
 
-SERVER_NAME="${SERVER_NAME:-DEFAULT_SERVER_NAME}"
+SERVER_NAME="${SERVER_NAME:-}"
 if [ -z "$SERVER_NAME" ] && [ "$using_defaults" = false ]; then
   SERVER_NAME=$(detect_cert_server_name "$SSL_CERTIFICATE_FILE")
 fi
@@ -104,6 +104,9 @@ SIEVE_HOST="${SIEVE_HOST%%:*}"
 AUTH_USER="${AUTH_USER:-user}"
 VERBOSE="${SIEVE_LOG_LEVEL:-info}"
 
+echo "ManageSieve backend: ${SIEVE_HOST}:${SIEVE_PORT} (user: ${AUTH_USER})"
+echo "Logs: Apache access/error and proxy output appear in 'docker logs' (SIEVE_LOG_LEVEL=debug for payload tracing)"
+
 cat > "$CONFIG_FILE" <<EOF
 [DEFAULT]
 
@@ -123,14 +126,20 @@ a2dissite 000-default.conf 2>/dev/null || true
 a2ensite 000-default.conf
 a2ensite sieve.conf
 
+# Global Apache logs → Docker (startup warnings, modules)
+if grep -q '^ErrorLog ' /etc/apache2/apache2.conf; then
+  sed -i 's|^ErrorLog .*|ErrorLog /dev/stderr|' /etc/apache2/apache2.conf
+fi
+
 case "$VERBOSE" in
   debug) PY_VERBOSE="-vvv" ;;
   warning) PY_VERBOSE="" ;;
-  *) PY_VERBOSE="-v" ;;
+  *) PY_VERBOSE="-vv" ;;
 esac
 
+echo "Starting ManageSieve proxy (log level: ${VERBOSE}) ..."
 cd /opt/sieve
-python main.py --config "$CONFIG_FILE" --host 127.0.0.1 --port 8765 $PY_VERBOSE &
+PYTHONUNBUFFERED=1 python -u main.py --config "$CONFIG_FILE" --host 127.0.0.1 --port 8765 $PY_VERBOSE &
 PROXY_PID=$!
 
 trap 'kill "$PROXY_PID" 2>/dev/null; exit' TERM INT

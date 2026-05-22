@@ -19,6 +19,8 @@ class MessagePump:
 
   def run(self, server, client) -> None:
 
+    logging.info("ManageSieve proxy session started")
+
     while True:
       sockets = self.wait(server, client)
 
@@ -36,7 +38,7 @@ class MessagePump:
         data = client.recv()
 
         if data == b'':
-          logging.info(" Client terminated")
+          logging.info("Client terminated")
           return
 
         logging.debug(data)

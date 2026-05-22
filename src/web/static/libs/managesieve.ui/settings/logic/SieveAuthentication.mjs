@@ -17,10 +17,13 @@ const CONFIG_USERNAME = "auth.username";
 
 /**
  * Client-side authentication for the web proxy.
+ * Passwords are never stored; they are requested on each connect.
  */
 class SieveWebSocketAuthentication extends SieveAbstractAuthentication {
 
   /**
+   * Prompts for a password when connecting. Never persisted.
+   *
    * @inheritdoc
    */
   async getPassword() {
@@ -56,8 +59,12 @@ class SieveWebSocketAuthentication extends SieveAbstractAuthentication {
   }
 
   /**
+   * Stores the username override in local settings.
+   *
    * @param {string} username
+   *   the username to use for authentication.
    * @returns {SieveWebSocketAuthentication}
+   *   a self reference.
    */
   async setUsername(username) {
     await this.account.getConfig().setString(CONFIG_USERNAME, username);

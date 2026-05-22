@@ -78,6 +78,25 @@ Environment variables:
 | `SSL_CERTIFICATE_KEY_FILE` | `/etc/apache2/certs/tls.key` | Path to the TLS private key (`.key` or `.pem`) |
 | `SERVER_NAME` | *(from certificate or `sieve.local`)* | Apache `ServerName`; must match the certificate hostname |
 
+### Logs
+
+Apache access/error logs and the Python ManageSieve proxy both write to
+`docker logs`:
+
+```bash
+docker logs -f websieve
+```
+
+Use `SIEVE_LOG_LEVEL=debug` for full WebSocket/ManageSieve payload tracing.
+On startup the entrypoint prints the configured ManageSieve backend
+(`DOVECOT_HOST` / `DOVECOT_PORT`).
+
+If the password dialog never appears, the proxy usually failed to reach
+ManageSieve before authentication (check for `ManageSieve connection failed`
+in the logs). With the default `DOVECOT_HOST=dovecot`, start the bundled test
+server with `docker compose --profile dev up`, or point `DOVECOT_HOST` at your
+real IMAP/ManageSieve host.
+
 ### Apache TLS and authentication
 
 TLS is terminated by Apache. Set `SSL_CERTIFICATE_FILE` and

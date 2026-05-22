@@ -117,7 +117,7 @@
   "account.details.sasl" : "Authentication",
   "account.details.server.edit" : "Edit Server",
   "account.details.credentials.edit" : "Edit Credentials",
-  "account.details.credentials.web.hint" : "Your password is requested when connecting. The username can be overridden here when using client-side authentication.",
+  "account.details.credentials.web.hint" : "Your password is requested when connecting and is never stored. The username can be overridden here when using client-side authentication.",
   "account.details.debugging.edit" : "Debugging",
   "account.details.export" : "Export Settings",
 

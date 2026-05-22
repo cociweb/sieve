@@ -29,8 +29,16 @@ class SieveSocket:
     self.disconnect()
 
   def connect(self):
+    logging.info(f"Connecting to ManageSieve at {self.__hostname}:{self.__port}")
+
     self.__socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    self.__socket.connect((self.__hostname, self.__port))
+
+    try:
+      self.__socket.connect((self.__hostname, self.__port))
+    except OSError as ex:
+      logging.error(
+        f"ManageSieve connection failed ({self.__hostname}:{self.__port}): {ex}")
+      raise
 
     capabilities = Capabilities()
     capabilities.decode(self.recv())
@@ -89,6 +97,8 @@ class SieveSocket:
     self.__socket.send(data)
 
   def start_tls(self) -> None:
+    logging.info(f"STARTTLS with ManageSieve at {self.__hostname}:{self.__port}")
+
     if b'"STARTTLS"' not in self.__capabilities.get_capabilities():
       raise Exception("Starttls not supported")
 
@@ -98,6 +108,8 @@ class SieveSocket:
       raise Exception("Starting tls failed")
 
     self.upgrade()
+
+    logging.info(f"ManageSieve STARTTLS completed ({self.__hostname}:{self.__port})")
 
     #update the capabilities
     self.__capabilities.decode(self.recv())

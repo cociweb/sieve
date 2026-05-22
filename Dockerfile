@@ -28,5 +28,7 @@ COPY docker/entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh \
     && a2dissite 000-default.conf 2>/dev/null || true
 
+ENV PYTHONUNBUFFERED=1
+
 EXPOSE 80 443
 ENTRYPOINT ["/entrypoint.sh"]

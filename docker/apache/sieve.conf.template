@@ -33,6 +33,8 @@
     FallbackResource /app.html
   </Directory>
 
-  ErrorLog ${APACHE_LOG_DIR}/sieve-error.log
-  CustomLog ${APACHE_LOG_DIR}/sieve-access.log combined
+  # Log to Docker stdout/stderr (visible via `docker logs`)
+  ErrorLog /dev/stderr
+  CustomLog /dev/stdout combined
+  LogLevel warn proxy_wstunnel:info
 </VirtualHost>

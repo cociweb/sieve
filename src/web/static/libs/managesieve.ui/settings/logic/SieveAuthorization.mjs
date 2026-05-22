@@ -9,12 +9,50 @@
  *   Thomas Schmid <schmid-thomas@gmx.net>
  */
 
+const CONFIG_AUTHORIZATION_TYPE_NONE = 0;
+const CONFIG_AUTHORIZATION_TYPE_SIEVE = 1;
+const CONFIG_AUTHORIZATION_TYPE_PROMPT = 2;
+const CONFIG_AUTHORIZATION_TYPE_CUSTOM = 3;
 
-const AUTHORIZATION_TYPE_USERNAME = 1;
+const DEFAULT_AUTHORIZATION_TYPE = CONFIG_AUTHORIZATION_TYPE_SIEVE;
+
 const CONFIG_AUTHORIZATION_TYPE = "authorization.type";
 
+import {
+  SieveNoAuthorization,
+  SieveCustomAuthorization,
+  SieveDefaultAuthorization,
+  SieveAbstractAuthorization
+} from "./SieveAbstractAuthorization.mjs";
+
 import { SieveAbstractMechanism } from "./SieveAbstractMechanism.mjs";
-import { SieveDefaultAuthorization } from "./SieveAbstractAuthorization.mjs";
+import { SieveIpcClient } from "./../../utils/SieveIpcClient.mjs";
+
+/**
+ * Shows a dialog and prompts for the authorization.
+ */
+class SievePromptAuthorization extends SieveAbstractAuthorization {
+
+  /**
+   * @inheritdoc
+   */
+  getType() {
+    return CONFIG_AUTHORIZATION_TYPE_PROMPT;
+  }
+
+  /**
+   * Shows a dialog asking for the authorization.
+   * @returns {string}
+   *   the authorization string or null in case the dialog was canceled.
+   */
+  async getAuthorization() {
+    const name = await (await this.account.getHost()).getDisplayName();
+
+    return await SieveIpcClient.sendMessage(
+      "accounts", "account-show-authorization",
+      { "displayname": name });
+  }
+}
 
 /**
  * Manages the authorization settings.
@@ -25,7 +63,7 @@ class SieveAuthorization extends SieveAbstractMechanism {
    * @inheritdoc
    **/
   getDefault() {
-    return AUTHORIZATION_TYPE_USERNAME;
+    return DEFAULT_AUTHORIZATION_TYPE;
   }
 
   /**
@@ -40,7 +78,10 @@ class SieveAuthorization extends SieveAbstractMechanism {
    **/
   hasMechanism(type) {
     switch (type) {
-      case AUTHORIZATION_TYPE_USERNAME:
+      case CONFIG_AUTHORIZATION_TYPE_NONE:
+      case CONFIG_AUTHORIZATION_TYPE_SIEVE:
+      case CONFIG_AUTHORIZATION_TYPE_PROMPT:
+      case CONFIG_AUTHORIZATION_TYPE_CUSTOM:
         return true;
 
       default:
@@ -50,16 +91,21 @@ class SieveAuthorization extends SieveAbstractMechanism {
 
   /**
    * @inheritdoc
-   */
-  async getMechanism() {
-    return new SieveDefaultAuthorization(AUTHORIZATION_TYPE_USERNAME, this.account);
-  }
-
-  /**
-   * @inheritdoc
    **/
-  getMechanismById() {
-    return new SieveDefaultAuthorization(AUTHORIZATION_TYPE_USERNAME, this.account);
+  getMechanismById(type) {
+    switch (type) {
+      case CONFIG_AUTHORIZATION_TYPE_NONE:
+        return new SieveNoAuthorization(CONFIG_AUTHORIZATION_TYPE_NONE, this.account);
+      case CONFIG_AUTHORIZATION_TYPE_SIEVE:
+        return new SieveDefaultAuthorization(CONFIG_AUTHORIZATION_TYPE_SIEVE, this.account);
+      case CONFIG_AUTHORIZATION_TYPE_PROMPT:
+        return new SievePromptAuthorization(CONFIG_AUTHORIZATION_TYPE_PROMPT, this.account);
+      case CONFIG_AUTHORIZATION_TYPE_CUSTOM:
+        return new SieveCustomAuthorization(CONFIG_AUTHORIZATION_TYPE_CUSTOM, this.account);
+
+      default:
+        throw new Error("Unknown authorization mechanism");
+    }
   }
 }
 

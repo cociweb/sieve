@@ -24,8 +24,10 @@ args = parser.parse_args()
 
 args.verbose = 40 - (10*args.verbose) if args.verbose > 0 else 0
 
-logging.basicConfig(level=args.verbose, format='%(asctime)s %(levelname)s [%(funcName)s] %(filename)s : %(message)s',
-                    datefmt='%Y-%m-%d %H:%M:%S')
+logging.basicConfig(
+  level=args.verbose,
+  format='%(asctime)s %(levelname)s [proxy] %(message)s',
+  datefmt='%Y-%m-%d %H:%M:%S')
 
 if args.config is None:
   args.config = "config.ini"
@@ -37,7 +39,7 @@ configfile = pathlib.Path(
 if not configfile.exists():
   raise Exception(f"No such config file {configfile}")
 
-print(f"Loading config from {configfile}")
+print(f"Loading config from {configfile}", flush=True)
 config = Config().load(configfile)
 
 address = args.host if args.host else config.get_address()

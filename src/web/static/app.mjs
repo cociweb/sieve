@@ -9,6 +9,8 @@
  *   Thomas Schmid <schmid-thomas@gmx.net>
  */
 
+const CONFIG_AUTHORIZATION_TYPE_CUSTOM = 3;
+
 import { SieveLogger } from "./libs/managesieve.ui/utils/SieveLogger.mjs";
 import { SieveIpcClient } from "./libs/managesieve.ui/utils/SieveIpcClient.mjs";
 
@@ -106,8 +108,16 @@ import { SieveI18n } from "./libs/managesieve.ui/utils/SieveI18n.mjs";
       const account = accounts.getAccountById(msg.payload.account);
 
       return {
+        general: {
+          security: await account.getSecurity().getTLS(),
+          sasl: await account.getSecurity().getMechanism()
+        },
         authentication: {
           username: await (await account.getAuthentication()).getUsername()
+        },
+        authorization: {
+          type: (await account.getAuthorization()).getType(),
+          username: await (await account.getAuthorization(CONFIG_AUTHORIZATION_TYPE_CUSTOM)).getAuthorization()
         }
       };
     },
@@ -116,9 +126,16 @@ import { SieveI18n } from "./libs/managesieve.ui/utils/SieveI18n.mjs";
 
       logger.logAction(`Set credentials for ${msg.payload.account}`);
 
-      const account = accounts.getAccountById(msg.payload.account);
-      await (await account.getAuthentication()).setUsername(
-        msg.payload.authentication.username);
+      const account = await accounts.getAccountById(msg.payload.account);
+
+      await account.getSecurity().setTLS(msg.payload.general.security);
+      await account.getSecurity().setMechanism(msg.payload.general.sasl);
+
+      await (await account.getAuthentication()).setUsername(msg.payload.authentication.username);
+
+      await account.setAuthorization(msg.payload.authorization.mechanism);
+      await (await account.getAuthorization(CONFIG_AUTHORIZATION_TYPE_CUSTOM))
+        .setAuthorization(msg.payload.authorization.username);
     },
 
     "settings-get-loglevel": async function() {

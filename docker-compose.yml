@@ -12,7 +12,7 @@ services:
       AUTH_USER: ${AUTH_USER:-user}
       SSL_CERTIFICATE_FILE: ${SSL_CERTIFICATE_FILE:-/etc/apache2/certs/tls.crt}
       SSL_CERTIFICATE_KEY_FILE: ${SSL_CERTIFICATE_KEY_FILE:-/etc/apache2/certs/tls.key}
-      SERVER_NAME: ${SERVER_NAME:-DEFAULT_SERVER_NAME}
+      SERVER_NAME: ${SERVER_NAME:-}
     volumes:
       - sieve-certs:/etc/apache2/certs
     restart: unless-stopped

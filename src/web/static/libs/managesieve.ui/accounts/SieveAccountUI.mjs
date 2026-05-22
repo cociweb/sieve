@@ -13,7 +13,7 @@
 import { SieveAbstractAccountUI } from "./SieveAbstractAccountUI.mjs";
 
 import { SieveServerSettingsUI } from "./../settings/ui/SieveServerSettingsUI.mjs";
-import { SieveWebCredentialSettingsUI } from "./../settings/ui/SieveWebCredentialSettingsUI.mjs";
+import { SieveCredentialSettingsUI } from "./../settings/ui/SieveCredentialSettingsUI.mjs";
 
 /**
  * A UI renderer for a sieve account
@@ -62,7 +62,7 @@ class SieveWebAccountUI extends SieveAbstractAccountUI {
    */
   async showCredentialSettings() {
 
-    await (new SieveWebCredentialSettingsUI(this)).show();
+    await (new SieveCredentialSettingsUI(this)).show();
     await this.renderSettings();
   }
 

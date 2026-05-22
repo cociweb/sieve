@@ -18,7 +18,8 @@ import {
   SieveDeleteScriptDialog,
   SieveRenameScriptDialog,
   SieveScriptBusyDialog,
-  SievePasswordDialog
+  SievePasswordDialog,
+  SieveAuthorizationDialog
 } from "./dialogs/SieveDialogUI.mjs";
 
 import { SieveLogger } from "./utils/SieveLogger.mjs";
@@ -74,19 +75,29 @@ async function onBusy(name) {
 }
 
 /**
- * Requests the password from the user.
+ * Requests the password from the user (never stored).
  *
  * @param {string} username
  *   the username for which the password is requested.
  * @param {string} account
  *   the account's display name.
- * @param {boolean} remember
- *   show the "remember password" field.
  * @returns {string}
  *   the password as string.
  */
-async function onAuthenticate(username, account, remember) {
-  return await (new SievePasswordDialog(username, account, { remember: remember })).show();
+async function onAuthenticate(username, account) {
+  return await (new SievePasswordDialog(username, account, { remember: false })).show();
+}
+
+/**
+ * Requests the authorization identity from the user.
+ *
+ * @param {string} account
+ *   the accounts displayname.
+ * @returns {string}
+ *   the username to be authorized.
+ */
+async function onAuthorize(account) {
+  return await (new SieveAuthorizationDialog(account)).show();
 }
 
 
@@ -112,7 +123,9 @@ async function main() {
   SieveIpcClient.setRequestHandler("accounts", "script-show-busy",
     async (msg) => { await onBusy(msg.payload); });
   SieveIpcClient.setRequestHandler("accounts", "account-show-authentication",
-    async (msg) => { return await onAuthenticate(msg.payload.username, msg.payload.displayname, msg.payload.remember); });
+    async (msg) => { return await onAuthenticate(msg.payload.username, msg.payload.displayname); });
+  SieveIpcClient.setRequestHandler("accounts", "account-show-authorization",
+    async (msg) => { return await onAuthorize(msg.payload.displayname); });
 
   SieveIpcClient.setRequestHandler("accounts", "account-disconnected",
     async (msg) => { return await accounts.render(msg.payload); });
